@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage.jsx';
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
+import StudentsManagement from './pages/admin/StudentsManagement.jsx';
 import InstructorDashboard from './pages/instructor/InstructorDashboard.jsx';
 import StudentDashboard from './pages/student/StudentDashboard.jsx';
 import Unauthorized from './pages/Unauthorized.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import ProgramManagement from './pages/admin/ProgramManagement.jsx';
+import InstructorManagement from './pages/admin/InstructorManagement.jsx';
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
           {/* Protected Routes */}
           <Route element={<PrivateRoute allowedRoles={['admin']} />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/students" element={<StudentsManagement />} />
+            <Route path="/admin/programs" element={<ProgramManagement />} />
+            <Route path="/admin/instructors" element={<InstructorManagement />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={['instructor']} />}>
             <Route path="/instructor/dashboard" element={<InstructorDashboard />} />

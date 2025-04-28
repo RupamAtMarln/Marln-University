@@ -18,7 +18,7 @@ import {
   Award,
   Library
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const adminMenuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
@@ -60,8 +60,8 @@ const studentMenuItems = [
 ];
 
 export default function Sidebar({ role }) {
-  const [activeTab, setActiveTab] = useState('dashboard');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = role === 'admin' ? adminMenuItems : 
                    role === 'instructor' ? instructorMenuItems :
@@ -71,6 +71,9 @@ export default function Sidebar({ role }) {
     // Add logout logic here
     navigate('/');
   };
+
+  // Determine active tab based on current path
+  const activeTab = menuItems.find(item => location.pathname.startsWith(item.path))?.id;
 
   return (
     <div className="w-64 h-screen bg-blue-800 text-white flex flex-col">
@@ -95,10 +98,7 @@ export default function Sidebar({ role }) {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => {
-              setActiveTab(item.id);
-              navigate(item.path);
-            }}
+            onClick={() => navigate(item.path)}
             className={`w-full px-4 py-3 flex items-center space-x-3 hover:bg-blue-700 transition-colors ${
               activeTab === item.id ? 'bg-blue-700' : ''
             }`}
