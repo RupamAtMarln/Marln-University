@@ -6,7 +6,7 @@ import logo from '../../assets/marln-logo.png';
 import banner from '../../assets/banner.png';
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -15,6 +15,7 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    logout();
     const user = users.find(
       (u) => u.email === email && u.password === password
     );

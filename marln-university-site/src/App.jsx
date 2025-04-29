@@ -18,6 +18,15 @@ import UserManagement from './pages/admin/UserManagement.jsx';
 import SystemSettings from './pages/admin/SystemSettings.jsx';
 import Profile from './pages/admin/Profile.jsx';
 import DepartmentDashboard from './pages/admin/DepartmentDashboard.jsx';
+import InstructorProfile from './pages/instructor/Profile.jsx';
+import MyCourses from './pages/instructor/MyCourses.jsx';
+import InstructorStudentsManagement from './pages/instructor/StudentsManagement.jsx';
+import Assignments from './pages/instructor/Assignments.jsx';
+import Grades from './pages/instructor/Grades.jsx';
+import TeachingSchedule from './pages/instructor/TeachingSchedule.jsx';
+import CourseMaterials from './pages/instructor/CourseMaterials.jsx';
+import NotificationsInstructor from './pages/instructor/Notifications.jsx';
+import StudentMessages from './pages/instructor/StudentMessages.jsx';
 
 function App() {
   return (
@@ -45,9 +54,19 @@ function App() {
           </Route>
           <Route element={<PrivateRoute allowedRoles={['instructor']} />}>
             <Route path="/instructor/dashboard" element={<InstructorDashboard />} />
+            <Route path="/instructor/profile" element={<InstructorProfile />} />
+            <Route path="/instructor/courses" element={<MyCourses />} />
+            <Route path="/instructor/students" element={<InstructorStudentsManagement />} />
+            <Route path="/instructor/assignments" element={<Assignments />} />
+            <Route path="/instructor/grades" element={<Grades />} />
+            <Route path="/instructor/calendar" element={<TeachingSchedule />} />
+            <Route path="/instructor/materials" element={<CourseMaterials />} />
+            <Route path="/instructor/messages" element={<StudentMessages />} />
+            <Route path="/instructor/notifications" element={<NotificationsInstructor />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={['student']} />}>
             <Route path="/student/dashboard" element={<StudentDashboard />} />
+            <Route path="/student/profile" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

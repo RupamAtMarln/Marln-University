@@ -38,14 +38,13 @@ const adminMenuItems = [
 const instructorMenuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/instructor/dashboard' },
   { id: 'courses', label: 'My Courses', icon: BookOpen, path: '/instructor/courses' },
-  { id: 'students', label: 'Student Management', icon: Users2, path: '/instructor/students' },
+  { id: 'students', label: 'Students Management', icon: Users2, path: '/instructor/students' },
   { id: 'assignments', label: 'Assignments', icon: ClipboardList, path: '/instructor/assignments' },
-  { id: 'grades', label: 'Grades & Assessment', icon: BarChart3, path: '/instructor/grades' },
+  { id: 'grades', label: 'Grades & Assessment', icon: GraduationCap, path: '/instructor/grades' },
   { id: 'calendar', label: 'Teaching Schedule', icon: Calendar, path: '/instructor/calendar' },
   { id: 'materials', label: 'Course Materials', icon: FileText, path: '/instructor/materials' },
   { id: 'messages', label: 'Student Messages', icon: MessageSquare, path: '/instructor/messages' },
   { id: 'notifications', label: 'Notifications', icon: Bell, path: '/instructor/notifications' },
-  { id: 'profile', label: 'My Profile', icon: UserCircle, path: '/instructor/profile' },
 ];
 
 const studentMenuItems = [
@@ -61,6 +60,7 @@ const studentMenuItems = [
 ];
 
 export default function Sidebar({ role }) {
+  console.log('Sidebar role:', role);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -86,13 +86,17 @@ export default function Sidebar({ role }) {
       {/* User Info */}
       <button
         className="p-4 border-b border-[#0a1f4d] w-full text-left hover:bg-[#223a7a] transition-colors"
-        onClick={() => navigate('/admin/profile')}
+        onClick={() => {
+          if (role === 'admin') navigate('/admin/profile');
+          else if (role === 'instructor') navigate('/instructor/profile');
+          else if (role === 'student') navigate('/student/profile');
+        }}
         aria-label="Edit Profile"
       >
         <div className="flex items-center space-x-3">
           <UserCircle size={32} />
           <div>
-            <p className="font-medium">John Doe</p>
+            <p className="font-medium">{role === 'instructor' ? 'Dr. Emily Carter' : 'Alex Johnson'}</p>
             <p className="text-sm text-[#4a6baa]">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
           </div>
         </div>
