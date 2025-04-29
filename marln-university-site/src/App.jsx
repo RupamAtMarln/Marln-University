@@ -9,6 +9,15 @@ import PrivateRoute from './routes/PrivateRoute.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import ProgramManagement from './pages/admin/ProgramManagement.jsx';
 import InstructorManagement from './pages/admin/InstructorManagement.jsx';
+import CourseManagement from './pages/admin/CourseManagement.jsx';
+import DocumentManagement from './pages/admin/DocumentManagement.jsx';
+import AcademicCalendar from './pages/admin/AcademicCalendar.jsx';
+import Notifications from './pages/admin/Notifications.jsx';
+import Reports from './pages/admin/Reports.jsx';
+import UserManagement from './pages/admin/UserManagement.jsx';
+import SystemSettings from './pages/admin/SystemSettings.jsx';
+import Profile from './pages/admin/Profile.jsx';
+import DepartmentDashboard from './pages/admin/DepartmentDashboard.jsx';
 
 function App() {
   return (
@@ -24,6 +33,15 @@ function App() {
             <Route path="/admin/students" element={<StudentsManagement />} />
             <Route path="/admin/programs" element={<ProgramManagement />} />
             <Route path="/admin/instructors" element={<InstructorManagement />} />
+            <Route path="/admin/courses" element={<CourseManagement />} />
+            <Route path="/admin/documents" element={<DocumentManagement />} />
+            <Route path="/admin/calendar" element={<AcademicCalendar />} />
+            <Route path="/admin/notifications" element={<Notifications />} />
+            <Route path="/admin/reports" element={<Reports />} />
+            <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/settings" element={<SystemSettings />} />
+            <Route path="/admin/profile" element={<Profile />} />
+            <Route path="/admin/departments" element={<DepartmentDashboard />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={['instructor']} />}>
             <Route path="/instructor/dashboard" element={<InstructorDashboard />} />

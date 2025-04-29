@@ -1,15 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { programs as initialPrograms } from '../../data/programs';
+import { courses as initialCourses } from '../../data/courses';
 import { Plus, Edit, Eye, X } from 'lucide-react';
 
 export default function ProgramManagement() {
-  const [programs, setPrograms] = useState(initialPrograms);
+  // Load programs from localStorage or static file
+  const [programs, setPrograms] = useState(() => {
+    const stored = localStorage.getItem('programs');
+    return stored ? JSON.parse(stored) : initialPrograms;
+  });
+  useEffect(() => {
+    localStorage.setItem('programs', JSON.stringify(programs));
+  }, [programs]);
+
+  const [courses] = useState(() => {
+    const stored = localStorage.getItem('courses');
+    return stored ? JSON.parse(stored) : initialCourses;
+  });
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState(null);
   const [form, setForm] = useState({ name: '', duration: '', specialization: '' });
+
+  // Manage Courses Modal
+  const [showManageCourses, setShowManageCourses] = useState(false);
+  const [selectedTermIdx, setSelectedTermIdx] = useState(null);
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -41,6 +59,39 @@ export default function ProgramManagement() {
   const openViewModal = (program) => {
     setSelectedProgram(program);
     setShowViewModal(true);
+  };
+
+  // Open Manage Courses Modal for a term
+  const openManageCourses = (termIdx) => {
+    setSelectedTermIdx(termIdx);
+    setShowManageCourses(true);
+  };
+
+  // Add course to term
+  const addCourseToTerm = (courseId) => {
+    setPrograms(programs.map(p => {
+      if (p.id !== selectedProgram.id) return p;
+      const updatedTerms = p.terms.map((t, idx) => {
+        if (idx !== selectedTermIdx) return t;
+        if (!t.courses.includes(courseId)) {
+          return { ...t, courses: [...t.courses, courseId] };
+        }
+        return t;
+      });
+      return { ...p, terms: updatedTerms };
+    }));
+  };
+
+  // Remove course from term
+  const removeCourseFromTerm = (courseId) => {
+    setPrograms(programs.map(p => {
+      if (p.id !== selectedProgram.id) return p;
+      const updatedTerms = p.terms.map((t, idx) => {
+        if (idx !== selectedTermIdx) return t;
+        return { ...t, courses: t.courses.filter(id => id !== courseId) };
+      });
+      return { ...p, terms: updatedTerms };
+    }));
   };
 
   return (
@@ -157,17 +208,71 @@ export default function ProgramManagement() {
               <button onClick={() => setShowViewModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
             </div>
             <div className="space-y-2">
-              {selectedProgram.terms.map(term => (
+              {selectedProgram.terms.map((term, idx) => (
                 <div key={term.term} className="border rounded p-3 flex items-center justify-between">
                   <span className="font-semibold">Term/Semester {term.term}</span>
-                  <span className="text-sm text-gray-500">Courses: {term.courses.length}</span>
-                  {/* Future: Add manage courses button here */}
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-gray-500">Courses: {term.courses.length}</span>
+                    <button onClick={() => openManageCourses(idx)} className="text-blue-600 hover:underline text-sm">Manage Courses</button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       )}
+
+      {/* Manage Courses Modal */}
+      {showManageCourses && selectedProgram && selectedTermIdx !== null && (() => {
+        // Always get the latest program and term from state
+        const latestProgram = programs.find(p => p.id === selectedProgram.id);
+        const latestTerm = latestProgram?.terms[selectedTermIdx];
+        return (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-gray-800">Manage Courses for {latestProgram.name} - Term {latestTerm.term}</h2>
+                <button onClick={() => setShowManageCourses(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
+              </div>
+              <div className="mb-4">
+                <div className="font-semibold mb-2">Current Courses:</div>
+                {latestTerm.courses.length === 0 ? (
+                  <div className="text-gray-500">No courses assigned.</div>
+                ) : (
+                  <ul className="list-disc ml-6">
+                    {latestTerm.courses.map(cid => {
+                      const course = courses.find(c => c.id === cid || c.id === String(cid));
+                      return course ? (
+                        <li key={cid} className="flex items-center justify-between">
+                          <span>{course.name} ({course.code})</span>
+                          <button onClick={() => removeCourseFromTerm(course.id)} className="ml-2 text-red-600 hover:underline text-xs">Remove</button>
+                        </li>
+                      ) : null;
+                    })}
+                  </ul>
+                )}
+              </div>
+              <div className="mb-2 font-semibold">Add Course:</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {courses.filter(c => !latestTerm.courses.includes(c.id)).map(course => (
+                  <div key={course.id} className={`border rounded-lg p-4 flex flex-col justify-between bg-white shadow-sm ${course.source === 'nexushive' ? 'border-blue-400 bg-blue-50' : ''}`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-lg">{course.name}</span>
+                      {course.source === 'nexushive' && (
+                        <span className="ml-2 px-2 py-0.5 text-xs rounded bg-blue-600 text-white">NexusHive</span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-500 mb-1">Code: {course.code}</div>
+                    <div className="text-xs text-gray-600 mb-1">Credits: {course.credits} | Hours: {course.hours}</div>
+                    <div className="text-xs text-gray-400 mb-2">{course.description}</div>
+                    <button onClick={() => addCourseToTerm(course.id)} className="self-end mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-xs">Add</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 } 

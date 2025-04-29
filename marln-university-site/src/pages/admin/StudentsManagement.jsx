@@ -1,9 +1,27 @@
 import { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
-import { Search, Plus, Filter, Download, MoreVertical, X, Upload } from 'lucide-react';
+import { Search, Plus, Filter, Download, MoreVertical, X, Upload, Edit, Trash2, BarChart2, BookOpen, Award, Clock, TrendingUp } from 'lucide-react';
 import { students as initialStudents, programs, years } from '../../data/students';
 import * as XLSX from 'xlsx';
 import users from '../../data/user';
+
+// Mock data for student results
+const mockResults = {
+  overallGPA: 3.8,
+  attendance: 92,
+  courses: [
+    { name: 'Data Science', grade: 'A', score: 95 },
+    { name: 'Machine Learning', grade: 'A-', score: 88 },
+    { name: 'Database Systems', grade: 'B+', score: 87 },
+    { name: 'Web Development', grade: 'A', score: 92 },
+    { name: 'Cloud Computing', grade: 'B+', score: 85 }
+  ],
+  progress: [
+    { semester: 'Fall 2023', gpa: 3.7 },
+    { semester: 'Spring 2024', gpa: 3.8 },
+    { semester: 'Fall 2024', gpa: 3.9 }
+  ]
+};
 
 export default function StudentsManagement() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,6 +45,9 @@ export default function StudentsManagement() {
     gender: '',
     nationality: ''
   });
+  const [showActionMenu, setShowActionMenu] = useState(null);
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('students', JSON.stringify(students));
@@ -172,6 +193,26 @@ export default function StudentsManagement() {
     XLSX.writeFile(wb, 'students_export.xlsx');
   };
 
+  const handleActionClick = (studentId) => {
+    setShowActionMenu(showActionMenu === studentId ? null : studentId);
+  };
+
+  const handleEdit = (student) => {
+    // Add edit logic here
+    setShowActionMenu(null);
+  };
+
+  const handleDelete = (student) => {
+    // Add delete logic here
+    setShowActionMenu(null);
+  };
+
+  const handleViewResults = (student) => {
+    setSelectedStudent(student);
+    setShowResultsModal(true);
+    setShowActionMenu(null);
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -279,9 +320,41 @@ export default function StudentsManagement() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.enrollmentDate}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button className="text-gray-400 hover:text-gray-500">
-                        <MoreVertical size={20} />
-                      </button>
+                      <div className="relative">
+                        <button 
+                          onClick={() => handleActionClick(student.id)}
+                          className="text-gray-400 hover:text-gray-500"
+                        >
+                          <MoreVertical size={20} />
+                        </button>
+                        {showActionMenu === student.id && (
+                          <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+                            <div className="py-1">
+                              <button
+                                onClick={() => handleEdit(student)}
+                                className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              >
+                                <Edit size={16} className="mr-2" />
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDelete(student)}
+                                className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                              >
+                                <Trash2 size={16} className="mr-2" />
+                                Delete
+                              </button>
+                              <button
+                                onClick={() => handleViewResults(student)}
+                                className="flex items-center w-full px-4 py-2 text-sm text-blue-600 hover:bg-gray-100"
+                              >
+                                <BarChart2 size={16} className="mr-2" />
+                                View Results
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -502,6 +575,102 @@ export default function StudentsManagement() {
                   >
                     Cancel
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Results Modal */}
+      {showResultsModal && selectedStudent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">Student Results - {selectedStudent.name}</h2>
+              <button onClick={() => setShowResultsModal(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Overview Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-blue-600">Overall GPA</p>
+                    <p className="text-2xl font-bold text-blue-700">{mockResults.overallGPA}</p>
+                  </div>
+                  <Award className="text-blue-500" size={24} />
+                </div>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-green-600">Attendance</p>
+                    <p className="text-2xl font-bold text-green-700">{mockResults.attendance}%</p>
+                  </div>
+                  <Clock className="text-green-500" size={24} />
+                </div>
+              </div>
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-purple-600">Courses</p>
+                    <p className="text-2xl font-bold text-purple-700">{mockResults.courses.length}</p>
+                  </div>
+                  <BookOpen className="text-purple-500" size={24} />
+                </div>
+              </div>
+              <div className="bg-yellow-50 p-4 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-yellow-600">Progress</p>
+                    <p className="text-2xl font-bold text-yellow-700">↑ 0.2</p>
+                  </div>
+                  <TrendingUp className="text-yellow-500" size={24} />
+                </div>
+              </div>
+            </div>
+
+            {/* Course Performance */}
+            <div className="bg-white rounded-lg shadow p-6 mb-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Course Performance</h3>
+              <div className="space-y-4">
+                {mockResults.courses.map((course, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-medium text-gray-700">{course.name}</span>
+                        <span className="text-sm font-bold text-blue-600">{course.grade}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full" 
+                          style={{ width: `${course.score}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className="ml-4 text-sm font-medium text-gray-600">{course.score}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* GPA Progress */}
+            <div className="bg-white rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">GPA Progress</h3>
+              <div className="h-64">
+                <div className="flex items-end h-48 space-x-4">
+                  {mockResults.progress.map((semester, index) => (
+                    <div key={index} className="flex-1 flex flex-col items-center">
+                      <div 
+                        className="w-full bg-blue-600 rounded-t-lg"
+                        style={{ height: `${(semester.gpa / 4) * 100}%` }}
+                      ></div>
+                      <span className="text-xs text-gray-500 mt-2">{semester.semester}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

@@ -31,6 +31,7 @@ const adminMenuItems = [
   { id: 'calendar', label: 'Academic Calendar', icon: Calendar, path: '/admin/calendar' },
   { id: 'notifications', label: 'Notifications/Queries', icon: Bell, path: '/admin/notifications' },
   { id: 'reports', label: 'Reports & Analytics', icon: BarChart3, path: '/admin/reports' },
+  { id: 'users', label: 'User Management', icon: Users2, path: '/admin/users' },
   { id: 'settings', label: 'System Settings', icon: Settings, path: '/admin/settings' },
 ];
 
@@ -76,22 +77,26 @@ export default function Sidebar({ role }) {
   const activeTab = menuItems.find(item => location.pathname.startsWith(item.path))?.id;
 
   return (
-    <div className="w-64 h-screen bg-blue-800 text-white flex flex-col">
+    <div className="w-64 h-screen bg-[#11296F] text-white flex flex-col">
       {/* Logo */}
-      <div className="p-4 border-b border-blue-700">
+      <div className="p-4 border-b border-[#0a1f4d]">
         <h1 className="text-xl font-bold">NexusHive</h1>
       </div>
 
       {/* User Info */}
-      <div className="p-4 border-b border-blue-700">
+      <button
+        className="p-4 border-b border-[#0a1f4d] w-full text-left hover:bg-[#223a7a] transition-colors"
+        onClick={() => navigate('/admin/profile')}
+        aria-label="Edit Profile"
+      >
         <div className="flex items-center space-x-3">
           <UserCircle size={32} />
           <div>
             <p className="font-medium">John Doe</p>
-            <p className="text-sm text-blue-200">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
+            <p className="text-sm text-[#4a6baa]">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
           </div>
         </div>
-      </div>
+      </button>
 
       {/* Menu Items */}
       <div className="flex-1 overflow-y-auto py-4">
@@ -99,8 +104,8 @@ export default function Sidebar({ role }) {
           <button
             key={item.id}
             onClick={() => navigate(item.path)}
-            className={`w-full px-4 py-3 flex items-center space-x-3 hover:bg-blue-700 transition-colors ${
-              activeTab === item.id ? 'bg-blue-700' : ''
+            className={`w-full px-4 py-3 flex items-center space-x-3 hover:bg-[#0a1f4d] transition-colors ${
+              activeTab === item.id ? 'bg-[#0a1f4d]' : ''
             }`}
           >
             <item.icon size={20} />
@@ -112,7 +117,7 @@ export default function Sidebar({ role }) {
       {/* Logout Button */}
       <button
         onClick={handleLogout}
-        className="p-4 border-t border-blue-700 flex items-center space-x-3 hover:bg-blue-700 transition-colors"
+        className="p-4 border-t border-[#0a1f4d] flex items-center space-x-3 hover:bg-[#0a1f4d] transition-colors"
       >
         <LogOut size={20} />
         <span>Logout</span>
