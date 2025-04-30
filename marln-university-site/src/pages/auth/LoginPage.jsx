@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import users from '../../data/user';
+import userData from '../../data/user';
 import logo from '../../assets/marln-logo.png';
 import banner from '../../assets/banner.png';
 
@@ -16,7 +16,7 @@ const LoginPage = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     logout();
-    const user = users.find(
+    const user = userData.find(
       (u) => u.email === email && u.password === password
     );
 
@@ -87,7 +87,7 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-blue-600 py-2 rounded-lg font-semibold shadow-md transition"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold shadow-md transition"
             >
               Log In
             </button>

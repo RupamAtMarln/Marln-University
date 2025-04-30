@@ -26,7 +26,18 @@ import Grades from './pages/instructor/Grades.jsx';
 import TeachingSchedule from './pages/instructor/TeachingSchedule.jsx';
 import CourseMaterials from './pages/instructor/CourseMaterials.jsx';
 import NotificationsInstructor from './pages/instructor/Notifications.jsx';
-import StudentMessages from './pages/instructor/StudentMessages.jsx';
+import InstructorStudentMessages from './pages/instructor/StudentMessages.jsx';
+import StudentProfile from './pages/student/Profile.jsx';
+import StudentCourses from './pages/student/Courses.jsx';
+import StudentAssignments from './pages/student/Assignments.jsx';
+import StudentGrades from './pages/student/Grades.jsx';
+import StudentSchedule from './pages/student/Schedule.jsx';
+import StudentMaterials from './pages/student/Materials.jsx';
+import StudentMessages from './pages/student/Messages.jsx';
+import StudentNotifications from './pages/student/Notifications.jsx';
+import CoursePdfViewer from './pages/student/CoursePdfViewer.jsx';
+import CourseVideoViewer from './pages/student/CourseVideoViewer.jsx';
+import Ecollab from './pages/student/Ecollab.jsx';
 
 function App() {
   return (
@@ -61,12 +72,22 @@ function App() {
             <Route path="/instructor/grades" element={<Grades />} />
             <Route path="/instructor/calendar" element={<TeachingSchedule />} />
             <Route path="/instructor/materials" element={<CourseMaterials />} />
-            <Route path="/instructor/messages" element={<StudentMessages />} />
+            <Route path="/instructor/messages" element={<InstructorStudentMessages />} />
             <Route path="/instructor/notifications" element={<NotificationsInstructor />} />
           </Route>
           <Route element={<PrivateRoute allowedRoles={['student']} />}>
             <Route path="/student/dashboard" element={<StudentDashboard />} />
-            <Route path="/student/profile" element={<Profile />} />
+            <Route path="/student/profile" element={<StudentProfile />} />
+            <Route path="/student/courses" element={<StudentCourses />} />
+            <Route path="/student/assignments" element={<StudentAssignments />} />
+            <Route path="/student/grades" element={<StudentGrades />} />
+            <Route path="/student/schedule" element={<StudentSchedule />} />
+            <Route path="/student/materials" element={<StudentMaterials />} />
+            <Route path="/student/messages" element={<StudentMessages />} />
+            <Route path="/student/notifications" element={<StudentNotifications />} />
+            <Route path="/student/ecollab" element={<Ecollab />} />
+            <Route path="/student/courses/:courseId/pdf/:week" element={<CoursePdfViewer />} />
+            <Route path="/student/courses/:courseId/video/:week" element={<CourseVideoViewer />} />
           </Route>
         </Routes>
       </Router>
