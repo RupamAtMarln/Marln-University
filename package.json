@@ -2,5 +2,6 @@
   "dependencies": {
     "recharts": "^2.15.3",
     "xlsx": "^0.18.5"
-  }
+  },
+  "homepage": "https://rupamatmarln.github.io/Marln-University/"
 }

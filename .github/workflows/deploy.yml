@@ -5,6 +5,10 @@ on:
     branches:
       - main
       - uni-v1
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -24,9 +28,13 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          CI: false
+          PUBLIC_URL: https://rupamatmarln.github.io/Marln-University
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
-          branch: gh-pages 
+          folder: build
+          branch: gh-pages
+          clean: true 
