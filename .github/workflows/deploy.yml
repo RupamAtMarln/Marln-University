@@ -13,6 +13,10 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./marln-university-site
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,6 +26,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: './marln-university-site/package-lock.json'
 
       - name: Install Dependencies
         run: npm ci
@@ -29,12 +34,11 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          CI: false
-          PUBLIC_URL: https://rupamatmarln.github.io/Marln-University
+          VITE_BASE_URL: /Marln-University
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build
+          folder: marln-university-site/dist
           branch: gh-pages
           clean: true 
