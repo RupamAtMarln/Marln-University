@@ -26,7 +26,7 @@ const adminMenuItems = [
   { id: 'students', label: 'Student Management', icon: Users2, path: '/admin/students' },
   { id: 'instructors', label: 'Instructor Management', icon: UserCircle, path: '/admin/instructors' },
   { id: 'programs', label: 'Program Management', icon: BookOpen, path: '/admin/programs' },
-  { id: 'departments', label: 'Department Management', icon: Building2, path: '/admin/departments' },
+  { id: 'departments', label: 'Depart. Management', icon: Building2, path: '/admin/departments' },
   { id: 'courses', label: 'Course Management', icon: GraduationCap, path: '/admin/courses' },
   { id: 'documents', label: 'Document Management', icon: FileText, path: '/admin/documents' },
   { id: 'calendar', label: 'Academic Calendar', icon: Calendar, path: '/admin/calendar' },
@@ -122,7 +122,9 @@ export default function Sidebar({ role: propRole }) {
         aria-label="Edit Profile"
       >
         <div className="flex items-center space-x-3">
-          <UserCircle size={32} />
+          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+            {getUserDisplayName().split(' ').map(word => word[0]).join('')}
+          </div>
           <div>
             <p className="font-medium">{getUserDisplayName()}</p>
             <p className="text-sm text-[#4a6baa]">{role.charAt(0).toUpperCase() + role.slice(1)}</p>

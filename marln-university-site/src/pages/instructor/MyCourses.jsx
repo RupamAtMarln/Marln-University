@@ -6,7 +6,7 @@ const dummyCourses = [
   {
     id: 1,
     code: 'CS101',
-    name: 'Introduction to Computer Science',
+    name: 'Intro to Computer Science',
     semester: 'Fall 2024',
     students: 45,
     weeks: [
@@ -123,6 +123,8 @@ export default function MyCourses() {
   const [newFileType, setNewFileType] = useState('pdf');
   const [editTitle, setEditTitle] = useState('');
   const [editWeekIdx, setEditWeekIdx] = useState(null);
+  const [showAddWeek, setShowAddWeek] = useState(false);
+  const [newWeekTitle, setNewWeekTitle] = useState("");
 
   // Open modal for course
   const openCourse = (course) => {
@@ -273,6 +275,42 @@ export default function MyCourses() {
                     </div>
                   </div>
                 ))}
+                {/* Add Week Section */}
+                <div className="mt-6">
+                  {showAddWeek ? (
+                    <div className="flex gap-2 items-center">
+                      <input
+                        className="border rounded px-2 py-1 flex-1"
+                        placeholder="Week title (e.g. Week 3: Deep Learning)"
+                        value={newWeekTitle}
+                        onChange={e => setNewWeekTitle(e.target.value)}
+                        autoFocus
+                      />
+                      <button
+                        className="px-3 py-1 bg-blue-600 text-white rounded"
+                        onClick={() => {
+                          if (!newWeekTitle.trim()) return;
+                          const updated = { ...selectedCourse };
+                          updated.weeks.push({ title: newWeekTitle.trim(), content: [] });
+                          updateCourse(updated);
+                          setShowAddWeek(false);
+                          setNewWeekTitle("");
+                        }}
+                      >Add</button>
+                      <button
+                        className="px-3 py-1 bg-gray-300 rounded"
+                        onClick={() => { setShowAddWeek(false); setNewWeekTitle(""); }}
+                      >Cancel</button>
+                    </div>
+                  ) : (
+                    <button
+                      className="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg font-semibold hover:bg-blue-200 transition"
+                      onClick={() => setShowAddWeek(true)}
+                    >
+                      + Add Week
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

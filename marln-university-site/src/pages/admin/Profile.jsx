@@ -3,8 +3,8 @@ import Sidebar from '../../components/Sidebar';
 import { UserCircle, Camera, Mail, Phone, Briefcase, Building2, Calendar, Globe, MapPin, Key, Linkedin, Github, Activity, CheckCircle, BarChart2 } from 'lucide-react';
 
 const mockProfile = {
-  name: 'John Doe',
-  email: 'admin@university.edu',
+  name: 'Alex Johnson',
+  email: 'alex.johnson@university.edu',
   phone: '+1 234-567-8901',
   role: 'Admin',
   department: 'IT',
@@ -12,8 +12,8 @@ const mockProfile = {
   gender: 'Male',
   address: '123 University Ave, City, Country',
   nationality: 'USA',
-  linkedin: 'https://linkedin.com/in/johndoe',
-  github: 'https://github.com/johndoe',
+  linkedin: 'https://linkedin.com/in/alexjohnson',
+  github: 'https://github.com/alexjohnson',
   lastLogin: '2024-06-10 14:23',
   profilePic: '',
   stats: {
@@ -71,7 +71,9 @@ export default function Profile() {
               {pic || profile.profilePic ? (
                 <img src={pic || profile.profilePic} alt="Profile" className="w-28 h-28 rounded-full object-cover border-4 border-blue-600" />
               ) : (
-                <UserCircle size={112} className="text-blue-600 bg-blue-50 rounded-full" />
+                <div className="w-28 h-28 rounded-full bg-blue-600 flex items-center justify-center text-white text-3xl font-bold border-4 border-blue-600">
+                  {profile.name.split(' ').map(word => word[0]).join('')}
+                </div>
               )}
               <label className="absolute bottom-2 right-2 bg-blue-600 p-2 rounded-full cursor-pointer hover:bg-blue-700">
                 <Camera size={18} className="text-white" />

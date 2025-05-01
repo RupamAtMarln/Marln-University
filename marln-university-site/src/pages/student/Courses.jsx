@@ -17,14 +17,14 @@ const courses = [
   },
   {
     id: 2,
-    title: 'Data Structures and Algorithms',
+    title: 'Advanced Python',
     instructor: 'Prof. Michael Chen',
     schedule: 'Tue, Thu 2:00 PM - 3:30 PM',
     progress: 60,
     nextClass: '2024-03-21T14:00:00',
     enrolledStudents: 38,
     room: 'Room 203',
-    description: 'Study of fundamental data structures and algorithms used in computer science.',
+    description: 'Master advanced Python concepts, best practices, and real-world applications.',
   },
   {
     id: 3,
@@ -62,6 +62,31 @@ const courseContents = {
         week: 4,
         pdf: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course1/course1-wk4-0004.pdf',
         video: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course1/course1-wk4-vid0004.mp4',
+      },
+    ],
+  },
+  'Advanced Python': {
+    syllabus: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-syllabus.pdf',
+    weeks: [
+      {
+        week: 1,
+        pdf: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk1-0001.pdf',
+        video: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk1-vid0001.mp4',
+      },
+      {
+        week: 2,
+        pdf: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk2-0002.pdf',
+        video: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk2-vid0002.mp4',
+      },
+      {
+        week: 3,
+        pdf: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk3-0003.pdf',
+        video: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk3-vid0003.mp4',
+      },
+      {
+        week: 4,
+        pdf: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk4-0004.pdf',
+        video: 'https://lms-frontend-resources.s3.ap-south-1.amazonaws.com/CourseDetails/course2/course2-wk4-vid0004.mp4',
       },
     ],
   },
@@ -186,36 +211,55 @@ function Courses() {
                     </ul>
                   </div>
                 </div>
-                {/* In-depth content for Cyber Security */}
-                {selectedCourse.title === 'Cyber Security' && courseContents['Cyber Security'] && (
+                {/* In-depth content for courses */}
+                {(selectedCourse.title === 'Cyber Security' || selectedCourse.title === 'Advanced Python') && courseContents[selectedCourse.title] && (
                   <div className="mt-1">
-                    <h3 className="flex items-center gap-1 text-base font-bold text-purple-600 mb-2"><FileText className="w-5 h-5" /> Course Syllabus</h3>
+                    <h3 className="flex items-center gap-1 text-base font-bold text-purple-600 mb-2">
+                      <FileText className="w-5 h-5" /> Course Syllabus
+                    </h3>
                     <button
-                      onClick={() => navigate(`/student/courses/1/pdf/syllabus`, { state: { pdfUrl: courseContents['Cyber Security'].syllabus, title: 'Cyber Security Syllabus' } })}
+                      onClick={() => navigate(`/student/courses/${selectedCourse.id}/pdf/syllabus`, {
+                        state: {
+                          pdfUrl: courseContents[selectedCourse.title].syllabus + '?v=' + Date.now(),
+                          title: `${selectedCourse.title} Syllabus`
+                        }
+                      })}
                       className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg shadow-sm hover:from-blue-600 hover:to-purple-600 font-medium text-sm mb-4 transition"
                     >
                       <FileText className="mr-2 w-4 h-4" /> View Syllabus (PDF)
                     </button>
-                    <h3 className="flex items-center gap-1 text-base font-bold text-pink-600 mb-2"><Video className="w-5 h-5" /> Weekly Content</h3>
+                    
+                    <h3 className="flex items-center gap-1 text-base font-bold text-pink-600 mb-2">
+                      <Video className="w-5 h-5" /> Weekly Content
+                    </h3>
                     <div className="space-y-4">
-                      {courseContents['Cyber Security'].weeks.map((week, idx) => (
-                        <div key={week.week} className={`relative bg-gradient-to-br from-white via-blue-50 to-purple-50 rounded-xl shadow-sm p-4 flex flex-col md:flex-row gap-4 items-center border-l-2 ${idx % 2 === 0 ? 'border-blue-300' : 'border-purple-300'}`}>
-                          <div className="flex flex-col items-center md:items-start w-24 shrink-0">
-                            <div className="text-lg font-bold text-blue-600 mb-0.5">Week {week.week}</div>
-                            <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 mb-1" />
-                          </div>
-                          <div className="flex-1 flex flex-col md:flex-row gap-2 items-center md:items-stretch">
+                      {courseContents[selectedCourse.title].weeks.map((week) => (
+                        <div key={week.week} className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="text-sm font-semibold text-gray-700 mb-3">Week {week.week}</h4>
+                          <div className="flex flex-wrap gap-2">
                             <button
-                              onClick={() => navigate(`/student/courses/1/pdf/${week.week}`, { state: { pdfUrl: week.pdf, title: `Cyber Security - Week ${week.week} PDF` } })}
-                              className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-md shadow-sm hover:from-green-600 hover:to-emerald-600 font-medium text-sm transition"
+                              onClick={() => navigate(`/student/courses/${selectedCourse.id}/pdf/${week.week}`, {
+                                state: {
+                                  pdfUrl: week.pdf + '?v=' + Date.now(),
+                                  title: `${selectedCourse.title} - Week ${week.week} Materials`
+                                }
+                              })}
+                              className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 text-sm text-gray-600 rounded-md hover:bg-gray-50"
                             >
-                              <FileText className="mr-2 w-4 h-4" /> View PDF
+                              <FileText className="mr-1.5 w-4 h-4 text-blue-500" />
+                              View PDF
                             </button>
                             <button
-                              onClick={() => navigate(`/student/courses/1/video/${week.week}`, { state: { videoUrl: week.video, title: `Cyber Security - Week ${week.week} Video` } })}
-                              className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md shadow-sm hover:from-purple-600 hover:to-pink-600 font-medium text-sm transition"
+                              onClick={() => navigate(`/student/courses/${selectedCourse.id}/video/${week.week}`, {
+                                state: {
+                                  videoUrl: week.video + '?v=' + Date.now(),
+                                  title: `${selectedCourse.title} - Week ${week.week} Lecture`
+                                }
+                              })}
+                              className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 text-sm text-gray-600 rounded-md hover:bg-gray-50"
                             >
-                              <Video className="mr-2 w-4 h-4" /> View Video
+                              <Video className="mr-1.5 w-4 h-4 text-pink-500" />
+                              Watch Video
                             </button>
                           </div>
                         </div>

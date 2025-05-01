@@ -1,23 +1,15 @@
 import { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { instructors as initialInstructors, departments, batches } from '../../data/instructors';
-import { Plus, Edit, Eye, X, Users, BookOpen, BarChart3 } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Users, BookOpen, BarChart3 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 
 export default function InstructorManagement() {
   const [instructors, setInstructors] = useState(initialInstructors);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showViewModal, setShowViewModal] = useState(false);
   const [selectedInstructor, setSelectedInstructor] = useState(null);
   const [form, setForm] = useState({ name: '', email: '', department: '' });
-
-  // State for viewing courses/batches
-  const [showCoursesModal, setShowCoursesModal] = useState(false);
-  const [showBatchesModal, setShowBatchesModal] = useState(false);
-
-  // State for engagement modal
-  const [showEngagementModal, setShowEngagementModal] = useState(false);
 
   // Add Instructor
   const handleAdd = (e) => {
@@ -50,57 +42,12 @@ export default function InstructorManagement() {
     setShowEditModal(true);
   };
 
-  const openViewModal = (instructor) => {
-    setSelectedInstructor(instructor);
-    setShowViewModal(true);
+  // Delete Instructor
+  const handleDelete = (instructor) => {
+    if (window.confirm('Are you sure you want to delete this instructor?')) {
+      setInstructors(instructors.filter(i => i.id !== instructor.id));
+    }
   };
-
-  // Assign Courses (UI only)
-  const [showAssignCourses, setShowAssignCourses] = useState(false);
-  const [courseForm, setCourseForm] = useState({ course: '', program: '', start: '', end: '' });
-  const handleAssignCourse = (e) => {
-    e.preventDefault();
-    setInstructors(instructors.map(i => i.id === selectedInstructor.id ? {
-      ...i,
-      assignedCourses: [...i.assignedCourses, { ...courseForm }]
-    } : i));
-    setCourseForm({ course: '', program: '', start: '', end: '' });
-    setShowAssignCourses(false);
-  };
-
-  // Assign Batches (UI only)
-  const [showAssignBatches, setShowAssignBatches] = useState(false);
-  const [selectedBatches, setSelectedBatches] = useState([]);
-  const handleAssignBatches = () => {
-    setInstructors(instructors.map(i => i.id === selectedInstructor.id ? {
-      ...i,
-      assignedBatches: selectedBatches
-    } : i));
-    setShowAssignBatches(false);
-    setSelectedBatches([]);
-  };
-
-  const openCoursesModal = (instructor) => {
-    setSelectedInstructor(instructor);
-    setShowCoursesModal(true);
-  };
-  const openBatchesModal = (instructor) => {
-    setSelectedInstructor(instructor);
-    setShowBatchesModal(true);
-  };
-
-  const openEngagementModal = (instructor) => {
-    setSelectedInstructor(instructor);
-    setShowEngagementModal(true);
-  };
-
-  // Mock engagement breakdown data
-  const getEngagementData = (instructor) => ([
-    { name: 'Classes', value: Math.round(instructor.engagement * 0.9) },
-    { name: 'Assignments', value: Math.round(instructor.engagement * 0.8) },
-    { name: 'Feedback', value: Math.round(instructor.engagement * 0.95) },
-    { name: 'Attendance', value: instructor.engagement },
-  ]);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -138,27 +85,39 @@ export default function InstructorManagement() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{instructor.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{instructor.email}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{instructor.department}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-700 flex flex-col items-center">
-                      <button onClick={() => openCoursesModal(instructor)} className="flex flex-col items-center focus:outline-none">
+                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-700">
+                      <div className="flex flex-col items-center">
                         <BookOpen size={18} className="inline-block mb-1" />
                         {instructor.assignedCourses.length}
-                      </button>
+                      </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-700 flex flex-col items-center">
-                      <button onClick={() => openBatchesModal(instructor)} className="flex flex-col items-center focus:outline-none">
+                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-700">
+                      <div className="flex flex-col items-center">
                         <Users size={18} className="inline-block mb-1" />
                         {instructor.assignedBatches.length}
-                      </button>
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-sm">
-                      <button onClick={() => openEngagementModal(instructor)} className="flex items-center justify-center w-full focus:outline-none">
-                        <BarChart3 size={18} className="inline-block mb-1 text-yellow-600" />
-                        <span className="ml-1 font-semibold">{instructor.engagement}%</span>
-                      </button>
+                      <div className="flex items-center justify-center">
+                        <BarChart3 size={18} className="inline-block mr-1 text-yellow-600" />
+                        <span className="font-semibold">{instructor.engagement}%</span>
+                      </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                      <button onClick={() => openViewModal(instructor)} className="text-blue-600 hover:text-blue-800"><Eye size={18} /></button>
-                      <button onClick={() => openEditModal(instructor)} className="text-green-600 hover:text-green-800"><Edit size={18} /></button>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+                      <button
+                        onClick={() => openEditModal(instructor)}
+                        className="text-green-600 hover:text-green-800"
+                        title="Edit"
+                      >
+                        <Edit size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(instructor)}
+                        className="text-red-600 hover:text-red-800"
+                        title="Delete"
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -230,178 +189,6 @@ export default function InstructorManagement() {
                 <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Save Changes</button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* View Instructor Modal */}
-      {showViewModal && selectedInstructor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">{selectedInstructor.name} - Details</h2>
-              <button onClick={() => setShowViewModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
-            </div>
-            <div className="mb-4">
-              <div className="font-semibold">Email:</div>
-              <div className="mb-2">{selectedInstructor.email}</div>
-              <div className="font-semibold">Department:</div>
-              <div className="mb-2">{selectedInstructor.department}</div>
-              <div className="font-semibold">Engagement:</div>
-              <div className="mb-2">{selectedInstructor.engagement}%</div>
-            </div>
-            <div className="mb-4">
-              <div className="font-semibold mb-2">Assigned Courses:</div>
-              {selectedInstructor.assignedCourses.length === 0 ? (
-                <div className="text-gray-500">No courses assigned.</div>
-              ) : (
-                <ul className="list-disc ml-6">
-                  {selectedInstructor.assignedCourses.map((c, idx) => (
-                    <li key={idx}>{c.course} ({c.program}) <span className="text-xs text-gray-500">[{c.start} to {c.end}]</span></li>
-                  ))}
-                </ul>
-              )}
-              <button onClick={() => setShowAssignCourses(true)} className="mt-2 text-blue-600 hover:underline">Assign Course</button>
-            </div>
-            <div className="mb-4">
-              <div className="font-semibold mb-2">Assigned Batches:</div>
-              {selectedInstructor.assignedBatches.length === 0 ? (
-                <div className="text-gray-500">No batches assigned.</div>
-              ) : (
-                <ul className="list-disc ml-6">
-                  {selectedInstructor.assignedBatches.map((b, idx) => (
-                    <li key={idx}>{b}</li>
-                  ))}
-                </ul>
-              )}
-              <button onClick={() => setShowAssignBatches(true)} className="mt-2 text-blue-600 hover:underline">Assign Batches</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Assign Courses Modal */}
-      {showAssignCourses && selectedInstructor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Assign Course to {selectedInstructor.name}</h2>
-              <button onClick={() => setShowAssignCourses(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
-            </div>
-            <form onSubmit={handleAssignCourse} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Course Name</label>
-                <input type="text" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={courseForm.course} onChange={e => setCourseForm(f => ({ ...f, course: e.target.value }))} />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Program</label>
-                <input type="text" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={courseForm.program} onChange={e => setCourseForm(f => ({ ...f, program: e.target.value }))} />
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Start Date</label>
-                  <input type="date" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={courseForm.start} onChange={e => setCourseForm(f => ({ ...f, start: e.target.value }))} />
-                </div>
-                <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">End Date</label>
-                  <input type="date" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={courseForm.end} onChange={e => setCourseForm(f => ({ ...f, end: e.target.value }))} />
-                </div>
-              </div>
-              <div className="flex justify-end space-x-3 mt-6">
-                <button type="button" onClick={() => setShowAssignCourses(false)} className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Assign Course</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Assign Batches Modal */}
-      {showAssignBatches && selectedInstructor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Assign Batches to {selectedInstructor.name}</h2>
-              <button onClick={() => setShowAssignBatches(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Select Batches</label>
-                <select multiple className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" value={selectedBatches} onChange={e => setSelectedBatches(Array.from(e.target.selectedOptions, option => option.value))}>
-                  {batches.map(b => <option key={b} value={b}>{b}</option>)}
-                </select>
-              </div>
-              <div className="flex justify-end space-x-3 mt-6">
-                <button type="button" onClick={() => setShowAssignBatches(false)} className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                <button type="button" onClick={handleAssignBatches} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Assign Batches</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Courses Modal */}
-      {showCoursesModal && selectedInstructor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Courses for {selectedInstructor.name}</h2>
-              <button onClick={() => setShowCoursesModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
-            </div>
-            {selectedInstructor.assignedCourses.length === 0 ? (
-              <div className="text-gray-500">No courses assigned.</div>
-            ) : (
-              <ul className="list-disc ml-6">
-                {selectedInstructor.assignedCourses.map((c, idx) => (
-                  <li key={idx} className="mb-2">
-                    <span className="font-semibold">{c.course}</span> <span className="text-xs text-gray-500">({c.program})</span><br/>
-                    <span className="text-xs text-gray-500">{c.start} to {c.end}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
-      {/* Batches Modal */}
-      {showBatchesModal && selectedInstructor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Batches for {selectedInstructor.name}</h2>
-              <button onClick={() => setShowBatchesModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
-            </div>
-            {selectedInstructor.assignedBatches.length === 0 ? (
-              <div className="text-gray-500">No batches assigned.</div>
-            ) : (
-              <ul className="list-disc ml-6">
-                {selectedInstructor.assignedBatches.map((b, idx) => (
-                  <li key={idx}>{b}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Engagement Modal */}
-      {showEngagementModal && selectedInstructor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-xl">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold text-gray-800">Engagement for {selectedInstructor.name}</h2>
-              <button onClick={() => setShowEngagementModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
-            </div>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={getEngagementData(selectedInstructor)} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis domain={[0, 100]} />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="value" fill="#2563eb" name="Engagement (%)" />
-              </BarChart>
-            </ResponsiveContainer>
           </div>
         </div>
       )}

@@ -71,7 +71,9 @@ export default function InstructorProfile() {
               {pic || profile.profilePic ? (
                 <img src={pic || profile.profilePic} alt="Profile" className="w-28 h-28 rounded-full object-cover border-4 border-blue-600" />
               ) : (
-                <UserCircle size={112} className="text-blue-600 bg-blue-50 rounded-full" />
+                <div className="w-28 h-28 rounded-full bg-blue-600 flex items-center justify-center text-white text-3xl font-bold border-4 border-blue-600">
+                  {profile.name.split(' ').map(word => word[0]).join('')}
+                </div>
               )}
               <label className="absolute bottom-2 right-2 bg-blue-600 p-2 rounded-full cursor-pointer hover:bg-blue-700">
                 <Camera size={18} className="text-white" />

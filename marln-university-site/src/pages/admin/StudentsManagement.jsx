@@ -48,6 +48,10 @@ export default function StudentsManagement() {
   const [showActionMenu, setShowActionMenu] = useState(null);
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editStudent, setEditStudent] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteStudent, setDeleteStudent] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('students', JSON.stringify(students));
@@ -198,13 +202,38 @@ export default function StudentsManagement() {
   };
 
   const handleEdit = (student) => {
-    // Add edit logic here
+    setEditStudent({ ...student });
+    setShowEditModal(true);
     setShowActionMenu(null);
   };
 
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditStudent((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    setStudents((prev) => prev.map((s) => (s.id === editStudent.id ? { ...editStudent } : s)));
+    setShowEditModal(false);
+    setEditStudent(null);
+  };
+
   const handleDelete = (student) => {
-    // Add delete logic here
+    setDeleteStudent(student);
+    setShowDeleteModal(true);
     setShowActionMenu(null);
+  };
+
+  const confirmDelete = () => {
+    setStudents((prev) => prev.filter((s) => s.id !== deleteStudent.id));
+    setShowDeleteModal(false);
+    setDeleteStudent(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setDeleteStudent(null);
   };
 
   const handleViewResults = (student) => {
@@ -673,6 +702,181 @@ export default function StudentsManagement() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Student Modal */}
+      {showEditModal && editStudent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800">Edit Student</h2>
+              <button onClick={() => setShowEditModal(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={24} />
+              </button>
+            </div>
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editStudent.name}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={editStudent.email}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Program</label>
+                  <select
+                    name="program"
+                    value={editStudent.program}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  >
+                    <option value="">Select Program</option>
+                    {programs.map(program => (
+                      <option key={program} value={program}>{program}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Year</label>
+                  <select
+                    name="year"
+                    value={editStudent.year}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  >
+                    <option value="">Select Year</option>
+                    {years.map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={editStudent.phone}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+                  <input
+                    type="date"
+                    name="dateOfBirth"
+                    value={editStudent.dateOfBirth}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Gender</label>
+                  <select
+                    name="gender"
+                    value={editStudent.gender}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Nationality</label>
+                  <input
+                    type="text"
+                    name="nationality"
+                    value={editStudent.nationality}
+                    onChange={handleEditInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">Address</label>
+                  <textarea
+                    name="address"
+                    value={editStudent.address}
+                    onChange={handleEditInputChange}
+                    rows="3"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+              <div className="flex justify-end space-x-3 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Student Modal */}
+      {showDeleteModal && deleteStudent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800">Delete Student</h2>
+              <button onClick={cancelDelete} className="text-gray-500 hover:text-gray-700">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="mb-6 text-gray-700">
+              Are you sure you want to delete <span className="font-semibold">{deleteStudent.name}</span>? This action cannot be undone.
+            </div>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={cancelDelete}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
