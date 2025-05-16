@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage.jsx';
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import StudentsManagement from './pages/admin/StudentsManagement.jsx';
@@ -38,6 +38,7 @@ import StudentNotifications from './pages/student/Notifications.jsx';
 import CoursePdfViewer from './pages/student/CoursePdfViewer.jsx';
 import CourseVideoViewer from './pages/student/CourseVideoViewer.jsx';
 import Ecollab from './pages/student/Ecollab.jsx';
+import CookieConsent from './components/CookieConsent.jsx';
 
 function App() {
   return (
@@ -91,6 +92,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      <CookieConsent />
     </AuthProvider>
   );
 }
