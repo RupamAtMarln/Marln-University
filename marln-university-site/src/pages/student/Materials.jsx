@@ -133,32 +133,32 @@ function Materials() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="student" />
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">Course Materials</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Course Materials</h1>
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-xl shadow mb-6 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow mb-6 p-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="text"
                   placeholder="Search materials..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
                 />
               </div>
               <select
                 value={selectedCourse}
                 onChange={(e) => setSelectedCourse(e.target.value)}
-                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
               >
                 <option value="all">All Courses</option>
                 <option value="CS101">CS101 - Introduction to Computer Science</option>
@@ -169,7 +169,7 @@ function Materials() {
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
               >
                 <option value="all">All Types</option>
                 <option value="lecture-notes">Lecture Notes</option>
@@ -177,7 +177,7 @@ function Materials() {
                 <option value="project">Projects</option>
                 <option value="resource">Resources</option>
               </select>
-              <button className="flex items-center justify-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50">
+              <button className="flex items-center justify-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700">
                 <Filter size={20} />
                 More Filters
               </button>
@@ -189,15 +189,15 @@ function Materials() {
             {filteredMaterials.map(material => (
               <div
                 key={material.id}
-                className="bg-white rounded-xl shadow overflow-hidden hover:shadow-md transition-shadow duration-200"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden hover:shadow-md transition-shadow duration-200"
               >
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-start gap-4">
                       {getFileIcon(material.format)}
                       <div>
-                        <h3 className="font-semibold text-gray-800">{material.title}</h3>
-                        <p className="text-sm text-gray-500">{material.course} ({material.code})</p>
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-100">{material.title}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-300">{material.course} ({material.code})</p>
                       </div>
                     </div>
                     <span className="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">

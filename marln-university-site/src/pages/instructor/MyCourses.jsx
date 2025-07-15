@@ -195,27 +195,27 @@ export default function MyCourses() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="instructor" />
       <div className="flex-1 overflow-auto p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">My Courses</h1>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8">My Courses</h1>
         {/* Courses Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
-            <div key={course.id} className="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-4 hover:shadow-2xl transition cursor-pointer" onClick={() => openCourse(course)}>
+            <div key={course.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 flex flex-col gap-4 hover:shadow-2xl transition cursor-pointer" onClick={() => openCourse(course)}>
               <div className="flex items-center gap-3">
-                <BookOpen size={36} className="text-blue-600" />
+                <BookOpen size={36} className="text-blue-600 dark:text-blue-400" />
                 <div>
-                  <div className="font-bold text-lg text-gray-800">{course.code}: {course.name}</div>
-                  <div className="text-sm text-gray-500">{course.semester}</div>
+                  <div className="font-bold text-lg text-gray-800 dark:text-gray-100">{course.code}: {course.name}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-300">{course.semester}</div>
                 </div>
               </div>
-              <div className="flex gap-4 text-sm text-gray-600 mt-2">
+              <div className="flex gap-4 text-sm text-gray-600 dark:text-gray-300 mt-2">
                 <span><Users2 size={16} className="inline mr-1" /> {course.students} students</span>
                 <span><FileText size={16} className="inline mr-1" /> {course.weeks.length} weeks</span>
               </div>
-              <div className="text-xs text-gray-400 mt-2">Last updated: {course.lastUpdated}</div>
-              <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition self-start">View / Edit</button>
+              <div className="text-xs text-gray-400 dark:text-gray-500 mt-2">Last updated: {course.lastUpdated}</div>
+              <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition self-start">View / Edit</button>
             </div>
           ))}
         </div>
@@ -223,30 +223,30 @@ export default function MyCourses() {
         {/* Course Modal */}
         {showModal && selectedCourse && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-8 relative animate-fadeIn">
-              <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-700" onClick={closeModal}><X size={28} /></button>
-              <h2 className="text-2xl font-bold text-blue-700 mb-4">{selectedCourse.code}: {selectedCourse.name}</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-3xl p-8 relative animate-fadeIn">
+              <button className="absolute top-4 right-4 text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100" onClick={closeModal}><X size={28} /></button>
+              <h2 className="text-2xl font-bold text-blue-700 dark:text-blue-400 mb-4">{selectedCourse.code}: {selectedCourse.name}</h2>
               <div className="space-y-4">
                 {selectedCourse.weeks.map((week, idx) => (
-                  <div key={idx} className="border rounded-xl p-4 bg-gray-50">
+                  <div key={idx} className="border border-gray-200 dark:border-gray-700 rounded-xl p-4 bg-gray-50 dark:bg-gray-900">
                     <div className="flex items-center justify-between">
                       {editWeekIdx === idx ? (
                         <div className="flex gap-2 items-center w-full">
-                          <input className="border rounded px-2 py-1 flex-1" value={editTitle} onChange={e => setEditTitle(e.target.value)} />
-                          <button className="px-2 py-1 bg-blue-600 text-white rounded" onClick={() => saveEditWeek(idx)}>Save</button>
-                          <button className="px-2 py-1 bg-gray-300 rounded" onClick={() => setEditWeekIdx(null)}>Cancel</button>
+                          <input className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 flex-1 dark:bg-gray-800 dark:text-gray-100" value={editTitle} onChange={e => setEditTitle(e.target.value)} />
+                          <button className="px-2 py-1 bg-blue-600 text-white rounded dark:bg-blue-700 dark:hover:bg-blue-800" onClick={() => saveEditWeek(idx)}>Save</button>
+                          <button className="px-2 py-1 bg-gray-300 dark:bg-gray-700 rounded" onClick={() => setEditWeekIdx(null)}>Cancel</button>
                         </div>
                       ) : (
                         <div className="flex gap-2 items-center">
-                          <span className="font-semibold text-gray-800 text-lg">{week.title}</span>
-                          <button className="text-blue-600 hover:underline text-xs" onClick={() => startEditWeek(idx, week.title)}><Edit size={16} /></button>
+                          <span className="font-semibold text-gray-800 dark:text-gray-100 text-lg">{week.title}</span>
+                          <button className="text-blue-600 dark:text-blue-400 hover:underline text-xs" onClick={() => startEditWeek(idx, week.title)}><Edit size={16} /></button>
                         </div>
                       )}
-                      <button className="ml-2 px-2 py-1 bg-green-600 text-white rounded flex items-center gap-1 text-xs" onClick={() => setUploadingWeek(idx)}><Upload size={16}/> Add Content</button>
+                      <button className="ml-2 px-2 py-1 bg-green-600 text-white rounded flex items-center gap-1 text-xs dark:bg-green-700 dark:hover:bg-green-800" onClick={() => setUploadingWeek(idx)}><Upload size={16}/> Add Content</button>
                     </div>
                     {/* Upload Area */}
                     {uploadingWeek === idx && (
-                      <div className="mt-3 flex flex-col gap-2 bg-white p-3 rounded border border-blue-200">
+                      <div className="mt-3 flex flex-col gap-2 bg-white dark:bg-gray-800 p-3 rounded border border-blue-200 dark:border-blue-700">
                         <div className="flex gap-2 items-center">
                           <select value={newFileType} onChange={e => setNewFileType(e.target.value)} className="border rounded px-2 py-1">
                             <option value="pdf">PDF</option>

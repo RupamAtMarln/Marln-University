@@ -69,16 +69,16 @@ export default function CourseManagement() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="admin" />
       <div className="flex-1 overflow-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Course Management</h1>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Course Management</h1>
             <div className="flex gap-2">
               <button
                 onClick={resetCoursesToDefault}
-                className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors border border-gray-300"
+                className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors border border-gray-300 dark:border-gray-600"
               >
                 Reset Courses to Default
               </button>
@@ -93,29 +93,29 @@ export default function CourseManagement() {
           </div>
 
           {/* Course List */}
-          <div className="bg-white rounded-lg shadow overflow-hidden mb-8">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-8">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Credits</th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Hours</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Code</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Credits</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Hours</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Source</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {courses.map((course) => (
-                  <tr key={course.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{course.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{course.code}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-700">{course.credits}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-700">{course.hours}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 capitalize">{course.source === 'nexushive' ? 'NexusHive' : 'University'}</td>
+                  <tr key={course.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{course.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{course.code}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-700 dark:text-blue-400">{course.credits}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-700 dark:text-green-400">{course.hours}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 capitalize">{course.source === 'nexushive' ? 'NexusHive' : 'University'}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                      <button onClick={() => openViewModal(course)} className="text-blue-600 hover:text-blue-800"><Eye size={18} /></button>
-                      <button onClick={() => openEditModal(course)} className="text-green-600 hover:text-green-800"><Edit size={18} /></button>
+                      <button onClick={() => openViewModal(course)} className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"><Eye size={18} /></button>
+                      <button onClick={() => openEditModal(course)} className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"><Edit size={18} /></button>
                     </td>
                   </tr>
                 ))}
@@ -124,20 +124,20 @@ export default function CourseManagement() {
           </div>
 
           {/* Predefined Courses */}
-          <div className="bg-white rounded-lg shadow p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">NexusHive Predefined Courses</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">NexusHive Predefined Courses</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {predefinedCourses.map((predef) => (
-                <div key={predef.id} className="border rounded-lg p-4 flex flex-col justify-between">
+                <div key={predef.id} className="border rounded-lg p-4 flex flex-col justify-between dark:border-gray-700">
                   <div>
-                    <div className="font-semibold text-blue-700">{predef.name}</div>
-                    <div className="text-sm text-gray-500">{predef.code}</div>
-                    <div className="text-xs text-gray-400 mb-2">{predef.credits} credits, {predef.hours} hours</div>
-                    <div className="text-xs text-gray-600 mb-2">{predef.description}</div>
+                    <div className="font-semibold text-blue-700 dark:text-blue-400">{predef.name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-300">{predef.code}</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">{predef.credits} credits, {predef.hours} hours</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">{predef.description}</div>
                   </div>
                   <button
                     onClick={() => addPredefinedCourse(predef)}
-                    className="mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 disabled:bg-gray-300 disabled:text-gray-500"
+                    className="mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-600 dark:disabled:text-gray-400"
                     disabled={courses.some(c => c.code === predef.code)}
                   >
                     {courses.some(c => c.code === predef.code) ? 'Added' : 'Add to University'}
@@ -152,37 +152,37 @@ export default function CourseManagement() {
       {/* Add Course Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Add New Course</h2>
-              <button onClick={() => setShowAddModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Add New Course</h2>
+              <button onClick={() => setShowAddModal(false)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"><X size={24} /></button>
             </div>
             <form onSubmit={handleAdd} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Course Name</label>
-                <input type="text" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Name</label>
+                <input type="text" className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Course Code</label>
-                <input type="text" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Code</label>
+                <input type="text" className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} />
               </div>
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Credits</label>
-                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.credits} onChange={e => setForm(f => ({ ...f, credits: e.target.value }))} />
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Credits</label>
+                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.credits} onChange={e => setForm(f => ({ ...f, credits: e.target.value }))} />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Instructional Hours</label>
-                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.hours} onChange={e => setForm(f => ({ ...f, hours: e.target.value }))} />
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Instructional Hours</label>
+                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.hours} onChange={e => setForm(f => ({ ...f, hours: e.target.value }))} />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                <textarea className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
               </div>
               <div className="flex justify-end space-x-3 mt-6">
-                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Add Course</button>
+                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">Add Course</button>
               </div>
             </form>
           </div>
@@ -192,37 +192,37 @@ export default function CourseManagement() {
       {/* Edit Course Modal */}
       {showEditModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Edit Course</h2>
-              <button onClick={() => setShowEditModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Edit Course</h2>
+              <button onClick={() => setShowEditModal(false)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"><X size={24} /></button>
             </div>
             <form onSubmit={handleEdit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Course Name</label>
-                <input type="text" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Name</label>
+                <input type="text" className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Course Code</label>
-                <input type="text" className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Course Code</label>
+                <input type="text" className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.code} onChange={e => setForm(f => ({ ...f, code: e.target.value }))} />
               </div>
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Credits</label>
-                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.credits} onChange={e => setForm(f => ({ ...f, credits: e.target.value }))} />
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Credits</label>
+                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.credits} onChange={e => setForm(f => ({ ...f, credits: e.target.value }))} />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Instructional Hours</label>
-                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" required value={form.hours} onChange={e => setForm(f => ({ ...f, hours: e.target.value }))} />
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Instructional Hours</label>
+                  <input type="number" min={1} className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" required value={form.hours} onChange={e => setForm(f => ({ ...f, hours: e.target.value }))} />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea className="mt-1 block w-full border border-gray-300 rounded-md py-2 px-3" rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                <textarea className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-700 dark:text-gray-100" rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
               </div>
               <div className="flex justify-end space-x-3 mt-6">
-                <button type="button" onClick={() => setShowEditModal(false)} className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Save Changes</button>
+                <button type="button" onClick={() => setShowEditModal(false)} className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800">Save Changes</button>
               </div>
             </form>
           </div>
@@ -232,16 +232,16 @@ export default function CourseManagement() {
       {/* View Course Modal */}
       {showViewModal && selectedCourse && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">{selectedCourse.name} - Details</h2>
-              <button onClick={() => setShowViewModal(false)} className="text-gray-500 hover:text-gray-700"><X size={24} /></button>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">{selectedCourse.name} - Details</h2>
+              <button onClick={() => setShowViewModal(false)} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"><X size={24} /></button>
             </div>
-            <div className="mb-2"><span className="font-semibold">Code:</span> {selectedCourse.code}</div>
-            <div className="mb-2"><span className="font-semibold">Credits:</span> {selectedCourse.credits}</div>
-            <div className="mb-2"><span className="font-semibold">Instructional Hours:</span> {selectedCourse.hours}</div>
-            <div className="mb-2"><span className="font-semibold">Source:</span> {selectedCourse.source === 'nexushive' ? 'NexusHive' : 'University'}</div>
-            <div className="mb-2"><span className="font-semibold">Description:</span> {selectedCourse.description}</div>
+            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Code:</span> {selectedCourse.code}</div>
+            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Credits:</span> {selectedCourse.credits}</div>
+            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Instructional Hours:</span> {selectedCourse.hours}</div>
+            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Source:</span> {selectedCourse.source === 'nexushive' ? 'NexusHive' : 'University'}</div>
+            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Description:</span> {selectedCourse.description}</div>
           </div>
         </div>
       )}

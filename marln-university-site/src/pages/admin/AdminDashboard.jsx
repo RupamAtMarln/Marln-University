@@ -54,7 +54,7 @@ const calendarEvents = [
 export default function AdminDashboard() {
   const [selectedMonth] = useState('June');
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="admin" />
       <div className="flex-1 overflow-auto p-6">
         <div className="flex flex-col lg:flex-row gap-6">
@@ -63,11 +63,11 @@ export default function AdminDashboard() {
             {/* Top Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat) => (
-                <div key={stat.label} className={`rounded-xl shadow p-6 flex items-center gap-4 ${stat.bg}`}>
+                <div key={stat.label} className={`rounded-xl shadow p-6 flex items-center gap-4 ${stat.bg} dark:bg-gray-800`}>
                   <stat.icon size={36} className={stat.color} />
                   <div>
-                    <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
-                    <div className="text-gray-500 text-sm">{stat.label}</div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">{stat.value}</div>
+                    <div className="text-gray-500 dark:text-gray-300 text-sm">{stat.label}</div>
                   </div>
                 </div>
               ))}
@@ -76,10 +76,10 @@ export default function AdminDashboard() {
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Academic Performance (Line Chart) */}
-              <div className="bg-white rounded-xl shadow p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                 <div className="flex justify-between items-center mb-2">
-                  <div className="font-semibold text-gray-700">Academic Performance</div>
-                  <select className="border rounded px-2 py-1 text-sm">
+                  <div className="font-semibold text-gray-700 dark:text-gray-100">Academic Performance</div>
+                  <select className="border rounded px-2 py-1 text-sm dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">
                     <option>Last 4 Year</option>
                     <option>Last 2 Year</option>
                   </select>
@@ -97,10 +97,10 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               {/* Earnings (Bar Chart) */}
-              <div className="bg-white rounded-xl shadow p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                 <div className="flex justify-between items-center mb-2">
-                  <div className="font-semibold text-gray-700">Earnings</div>
-                  <select className="border rounded px-2 py-1 text-sm">
+                  <div className="font-semibold text-gray-700 dark:text-gray-100">Earnings</div>
+                  <select className="border rounded px-2 py-1 text-sm dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">
                     <option>Last Semester</option>
                     <option>This Year</option>
                   </select>
@@ -121,8 +121,8 @@ export default function AdminDashboard() {
             {/* Middle Widgets */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Messages */}
-              <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-                <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><MessageCircle size={18}/> Messages</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+                <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><MessageCircle size={18}/> Messages</div>
                 <div className="flex-1 flex flex-col gap-3">
                   {messages.map((msg, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -139,8 +139,8 @@ export default function AdminDashboard() {
                 </div>
               </div>
               {/* Student Distribution (Pie/Donut) */}
-              <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center justify-center">
-                <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><PieChart size={18}/> Students</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col items-center justify-center">
+                <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><PieChart size={18}/> Students</div>
                 {/* Mock Donut Chart */}
                 <svg viewBox="0 0 120 120" width="100" height="100">
                   <circle r="50" cx="60" cy="60" fill="#e5e7eb" />
@@ -149,8 +149,8 @@ export default function AdminDashboard() {
                   <path d="M60 60 L25.24 97.55 A50 50 0 0 1 11.22 34.55 Z" className="fill-yellow-500" />
                   <path d="M60 60 L11.22 34.55 A50 50 0 0 1 60 10 Z" className="fill-purple-500" />
                 </svg>
-                <div className="text-2xl font-bold text-gray-800 mt-2">5,100</div>
-                <div className="text-xs text-gray-500">Total Students</div>
+                <div className="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-2">5,100</div>
+                <div className="text-xs text-gray-500 dark:text-gray-300">Total Students</div>
                 <div className="flex flex-col gap-1 mt-2 w-full">
                   {studentDistribution.map((s) => (
                     <div key={s.year} className="flex items-center gap-2 text-xs">
@@ -162,8 +162,8 @@ export default function AdminDashboard() {
                 </div>
               </div>
               {/* Student Activity */}
-              <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-                <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><BarChart2 size={18}/> Student Activity</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+                <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><BarChart2 size={18}/> Student Activity</div>
                 <div className="flex flex-col gap-3">
                   {studentActivity.map((a, i) => (
                     <div key={i} className="flex items-center gap-3">
@@ -180,12 +180,12 @@ export default function AdminDashboard() {
             </div>
 
             {/* Notice Board */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><Bell size={18}/> Notice Board</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><Bell size={18}/> Notice Board</div>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-sm">
                   <thead>
-                    <tr className="text-gray-500">
+                    <tr className="text-gray-500 dark:text-gray-300">
                       <th className="py-2 px-2 text-left">Title</th>
                       <th className="py-2 px-2 text-left">By</th>
                       <th className="py-2 px-2 text-left">Date</th>
@@ -194,8 +194,8 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     {noticeBoard.map((n, i) => (
-                      <tr key={i} className="border-t">
-                        <td className="py-2 px-2 font-semibold text-blue-700">{n.title}</td>
+                      <tr key={i} className="border-t dark:border-gray-700">
+                        <td className="py-2 px-2 font-semibold text-blue-700 dark:text-blue-400">{n.title}</td>
                         <td className="py-2 px-2">{n.by}</td>
                         <td className="py-2 px-2">{n.date}</td>
                         <td className="py-2 px-2 text-right">{n.views}</td>
@@ -210,47 +210,47 @@ export default function AdminDashboard() {
           {/* Right Sidebar Widgets */}
           <div className="w-full lg:w-80 flex flex-col gap-6">
             {/* Calendar */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><Calendar size={18}/> October 2027</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><Calendar size={18}/> October 2027</div>
               {/* Simple Calendar Mock */}
               <div className="grid grid-cols-7 gap-1 text-xs text-center mb-2">
-                {[...'SMTWTFS'].map((d, i) => <div key={i} className="font-bold text-gray-400">{d}</div>)}
+                {[...'SMTWTFS'].map((d, i) => <div key={i} className="font-bold text-gray-400 dark:text-gray-500">{d}</div>)}
                 {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
-                  <div key={d} className={`py-1 rounded-full ${d === 15 ? 'bg-blue-600 text-white font-bold' : 'text-gray-700'}`}>{d}</div>
+                  <div key={d} className={`py-1 rounded-full ${d === 15 ? 'bg-blue-600 text-white font-bold' : 'text-gray-700 dark:text-gray-200'}`}>{d}</div>
                 ))}
               </div>
             </div>
             {/* Schedule */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><Clock size={18}/> Schedule</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><Clock size={18}/> Schedule</div>
               <div className="flex flex-col gap-3">
                 {calendarEvents.map((e, i) => (
                   <div key={i} className="flex flex-col border-l-4 pl-3" style={{ borderColor: '#2563eb' }}>
-                    <div className="text-xs text-gray-400">{e.time}</div>
-                    <div className="font-semibold text-gray-800">{e.title}</div>
-                    <div className="text-xs text-gray-500">{e.desc}</div>
-                    <div className="text-xs text-blue-600">{e.audience}</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-300">{e.time}</div>
+                    <div className="font-semibold text-gray-800 dark:text-gray-100">{e.title}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">{e.desc}</div>
+                    <div className="text-xs text-blue-600 dark:text-blue-400">{e.audience}</div>
                   </div>
                 ))}
               </div>
             </div>
             {/* Recent Activities */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><TrendingUp size={18}/> Recent Activities</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><TrendingUp size={18}/> Recent Activities</div>
               <div className="flex flex-col gap-3">
                 {activities.map((a, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <a.icon size={18} className={a.color} />
                     <div className="flex-1 text-xs">
-                      <span className="font-medium text-gray-700">{a.desc}</span>
-                      <div className="text-gray-400">{a.time}</div>
+                      <span className="font-medium text-gray-700 dark:text-gray-100">{a.desc}</span>
+                      <div className="text-gray-400 dark:text-gray-300">{a.time}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             {/* Upgrade Widget */}
-            <div className="bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center gap-2">
+            <div className="bg-blue-50 dark:bg-blue-900 rounded-xl shadow p-6 flex flex-col items-center gap-2">
               <div className="flex items-center gap-2 text-blue-700 font-bold"><ArrowUpRight size={20}/> Go Pro with NexusHive</div>
               <div className="text-xs text-gray-500 text-center">Upgrade to NexusHive Pro for advanced features and support</div>
               <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm">Upgrade Now</button>

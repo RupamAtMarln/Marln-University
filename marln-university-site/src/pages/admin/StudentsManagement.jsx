@@ -243,164 +243,162 @@ export default function StudentsManagement() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       {/* Sidebar */}
       <Sidebar role="admin" />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Student Management</h1>
-            <div className="flex space-x-4">
-              <button 
-                onClick={() => setShowUploadModal(true)}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-green-700 transition-colors"
+      <div className="flex-1 overflow-auto p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">Student Management</h1>
+          <div className="flex space-x-4">
+            <button 
+              onClick={() => setShowUploadModal(true)}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-green-700 transition-colors dark:bg-green-700 dark:hover:bg-green-800"
+            >
+              <Upload size={20} />
+              <span>Upload Students</span>
+            </button>
+            <button 
+              onClick={() => setShowAddModal(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition-colors dark:bg-blue-700 dark:hover:bg-blue-800"
+            >
+              <Plus size={20} />
+              <span>Add New Student</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Search and Filter Bar */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
+                <input
+                  type="text"
+                  placeholder="Search students..."
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <select
+                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                value={selectedFilter}
+                onChange={(e) => setSelectedFilter(e.target.value)}
               >
-                <Upload size={20} />
-                <span>Upload Students</span>
+                <option value="all">All Students</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="graduated">Graduated</option>
+              </select>
+              <button className="border rounded-lg px-4 py-2 flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700">
+                <Filter size={20} />
+                <span>More Filters</span>
               </button>
-              <button 
-                onClick={() => setShowAddModal(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition-colors"
-              >
-                <Plus size={20} />
-                <span>Add New Student</span>
+              <button className="border rounded-lg px-4 py-2 flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700" onClick={handleExport}>
+                <Download size={20} />
+                <span>Export</span>
               </button>
             </div>
           </div>
+        </div>
 
-          {/* Search and Filter Bar */}
-          <div className="bg-white rounded-lg shadow p-4 mb-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Search students..."
-                    className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <select
-                  className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={selectedFilter}
-                  onChange={(e) => setSelectedFilter(e.target.value)}
-                >
-                  <option value="all">All Students</option>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="graduated">Graduated</option>
-                </select>
-                <button className="border rounded-lg px-4 py-2 flex items-center space-x-2 hover:bg-gray-50">
-                  <Filter size={20} />
-                  <span>More Filters</span>
-                </button>
-                <button className="border rounded-lg px-4 py-2 flex items-center space-x-2 hover:bg-gray-50" onClick={handleExport}>
-                  <Download size={20} />
-                  <span>Export</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Students Table */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Program</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrollment Date</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredStudents.map((student) => (
-                  <tr key={student.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                          <span className="text-gray-600 font-medium">{student.name.charAt(0)}</span>
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{student.name}</div>
-                        </div>
+        {/* Students Table */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-900">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Program</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Year</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Enrollment Date</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+              {filteredStudents.map((student) => (
+                <tr key={student.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center dark:bg-gray-700">
+                        <span className="text-gray-600 dark:text-gray-300 font-medium">{student.name.charAt(0)}</span>
                       </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.email}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.program}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.year}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        student.status === 'Active' ? 'bg-green-100 text-green-800' : 
-                        student.status === 'Inactive' ? 'bg-red-100 text-red-800' :
-                        'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {student.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{student.enrollmentDate}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="relative">
-                        <button 
-                          onClick={() => handleActionClick(student.id)}
-                          className="text-gray-400 hover:text-gray-500"
-                        >
-                          <MoreVertical size={20} />
-                        </button>
-                        {showActionMenu === student.id && (
-                          <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-                            <div className="py-1">
-                              <button
-                                onClick={() => handleEdit(student)}
-                                className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                              >
-                                <Edit size={16} className="mr-2" />
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => handleDelete(student)}
-                                className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                              >
-                                <Trash2 size={16} className="mr-2" />
-                                Delete
-                              </button>
-                              <button
-                                onClick={() => handleViewResults(student)}
-                                className="flex items-center w-full px-4 py-2 text-sm text-blue-600 hover:bg-gray-100"
-                              >
-                                <BarChart2 size={16} className="mr-2" />
-                                View Results
-                              </button>
-                            </div>
+                      <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{student.name}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{student.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{student.program}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{student.year}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      student.status === 'Active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 
+                      student.status === 'Inactive' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
+                      'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                    }`}>
+                      {student.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{student.enrollmentDate}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="relative">
+                      <button 
+                        onClick={() => handleActionClick(student.id)}
+                        className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
+                      >
+                        <MoreVertical size={20} />
+                      </button>
+                      {showActionMenu === student.id && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10 border border-gray-200 dark:border-gray-700">
+                          <div className="py-1">
+                            <button
+                              onClick={() => handleEdit(student)}
+                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200"
+                            >
+                              <Edit size={16} className="mr-2" />
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDelete(student)}
+                              className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-red-400"
+                            >
+                              <Trash2 size={16} className="mr-2" />
+                              Delete
+                            </button>
+                            <button
+                              onClick={() => handleViewResults(student)}
+                              className="flex items-center w-full px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-blue-400"
+                            >
+                              <BarChart2 size={16} className="mr-2" />
+                              View Results
+                            </button>
                           </div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-          {/* Pagination */}
-          <div className="mt-4 flex items-center justify-between">
-            <div className="text-sm text-gray-500">
-              Showing 1 to {filteredStudents.length} of {filteredStudents.length} entries
-            </div>
-            <div className="flex space-x-2">
-              <button className="px-3 py-1 border rounded-lg hover:bg-gray-50">Previous</button>
-              <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white">1</button>
-              <button className="px-3 py-1 border rounded-lg hover:bg-gray-50">Next</button>
-            </div>
+        {/* Pagination */}
+        <div className="mt-4 flex items-center justify-between">
+          <div className="text-sm text-gray-500 dark:text-gray-400">
+            Showing 1 to {filteredStudents.length} of {filteredStudents.length} entries
+          </div>
+          <div className="flex space-x-2">
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Previous</button>
+            <button className="px-3 py-1 border rounded-lg bg-blue-600 text-white dark:bg-blue-700 dark:text-white">1</button>
+            <button className="px-3 py-1 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Next</button>
           </div>
         </div>
       </div>
@@ -408,44 +406,44 @@ export default function StudentsManagement() {
       {/* Add Student Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Add New Student</h2>
-              <button onClick={() => setShowAddModal(false)} className="text-gray-500 hover:text-gray-700">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Add New Student</h2>
+              <button onClick={() => setShowAddModal(false)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                 <X size={24} />
               </button>
             </div>
             <form onSubmit={handleAddStudent} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
                   <input
                     type="text"
                     name="name"
                     value={newStudent.name}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                   <input
                     type="email"
                     name="email"
                     value={newStudent.email}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Program</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Program</label>
                   <select
                     name="program"
                     value={newStudent.program}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   >
                     <option value="">Select Program</option>
@@ -455,12 +453,12 @@ export default function StudentsManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Year</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Year</label>
                   <select
                     name="year"
                     value={newStudent.year}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   >
                     <option value="">Select Year</option>
@@ -470,34 +468,34 @@ export default function StudentsManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
                   <input
                     type="tel"
                     name="phone"
                     value={newStudent.phone}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Date of Birth</label>
                   <input
                     type="date"
                     name="dateOfBirth"
                     value={newStudent.dateOfBirth}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Gender</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Gender</label>
                   <select
                     name="gender"
                     value={newStudent.gender}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   >
                     <option value="">Select Gender</option>
@@ -507,24 +505,24 @@ export default function StudentsManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Nationality</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nationality</label>
                   <input
                     type="text"
                     name="nationality"
                     value={newStudent.nationality}
                     onChange={handleInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700">Address</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Address</label>
                   <textarea
                     name="address"
                     value={newStudent.address}
                     onChange={handleInputChange}
                     rows="3"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   ></textarea>
                 </div>
@@ -533,13 +531,13 @@ export default function StudentsManagement() {
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800"
                 >
                   Add Student
                 </button>
@@ -552,15 +550,15 @@ export default function StudentsManagement() {
       {/* Upload Students Modal */}
       {showUploadModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Upload Students</h2>
-              <button onClick={() => setShowUploadModal(false)} className="text-gray-500 hover:text-gray-700">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Upload Students</h2>
+              <button onClick={() => setShowUploadModal(false)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                 <X size={24} />
               </button>
             </div>
             <div className="space-y-4">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center dark:border-gray-700">
                 <input
                   type="file"
                   accept=".xlsx,.xls,.csv"
@@ -570,29 +568,29 @@ export default function StudentsManagement() {
                 />
                 <label
                   htmlFor="file-upload"
-                  className="cursor-pointer inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700"
+                  className="cursor-pointer inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   <Upload size={24} />
                   <span>Choose a file or drag it here</span>
                 </label>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                   Supported formats: .xlsx, .xls, .csv
                 </p>
               </div>
               {uploadError && (
-                <div className="bg-red-50 text-red-600 p-3 rounded-md">
+                <div className="bg-red-50 text-red-600 p-3 rounded-md dark:bg-red-900 dark:text-red-200">
                   {uploadError}
                 </div>
               )}
               {uploadSuccess && (
-                <div className="bg-green-50 text-green-600 p-3 rounded-md">
+                <div className="bg-green-50 text-green-600 p-3 rounded-md dark:bg-green-900 dark:text-green-200">
                   {uploadSuccess}
                 </div>
               )}
               <div className="flex justify-between items-center">
                 <button
                   onClick={downloadTemplate}
-                  className="text-blue-600 hover:text-blue-700 flex items-center space-x-2"
+                  className="text-blue-600 hover:text-blue-700 flex items-center space-x-2 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   <Download size={20} />
                   <span>Download Template</span>
@@ -600,7 +598,7 @@ export default function StudentsManagement() {
                 <div className="flex space-x-3">
                   <button
                     onClick={() => setShowUploadModal(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                   >
                     Cancel
                   </button>
@@ -614,90 +612,90 @@ export default function StudentsManagement() {
       {/* Results Modal */}
       {showResultsModal && selectedStudent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Student Results - {selectedStudent.name}</h2>
-              <button onClick={() => setShowResultsModal(false)} className="text-gray-500 hover:text-gray-700">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Student Results - {selectedStudent.name}</h2>
+              <button onClick={() => setShowResultsModal(false)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                 <X size={24} />
               </button>
             </div>
 
             {/* Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-blue-600">Overall GPA</p>
-                    <p className="text-2xl font-bold text-blue-700">{mockResults.overallGPA}</p>
+                    <p className="text-sm text-blue-600 dark:text-blue-400">Overall GPA</p>
+                    <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">{mockResults.overallGPA}</p>
                   </div>
-                  <Award className="text-blue-500" size={24} />
+                  <Award className="text-blue-500 dark:text-blue-400" size={24} />
                 </div>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-green-600">Attendance</p>
-                    <p className="text-2xl font-bold text-green-700">{mockResults.attendance}%</p>
+                    <p className="text-sm text-green-600 dark:text-green-400">Attendance</p>
+                    <p className="text-2xl font-bold text-green-700 dark:text-green-300">{mockResults.attendance}%</p>
                   </div>
-                  <Clock className="text-green-500" size={24} />
+                  <Clock className="text-green-500 dark:text-green-400" size={24} />
                 </div>
               </div>
-              <div className="bg-purple-50 p-4 rounded-lg">
+              <div className="bg-purple-50 dark:bg-purple-900 p-4 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-purple-600">Courses</p>
-                    <p className="text-2xl font-bold text-purple-700">{mockResults.courses.length}</p>
+                    <p className="text-sm text-purple-600 dark:text-purple-400">Courses</p>
+                    <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">{mockResults.courses.length}</p>
                   </div>
-                  <BookOpen className="text-purple-500" size={24} />
+                  <BookOpen className="text-purple-500 dark:text-purple-400" size={24} />
                 </div>
               </div>
-              <div className="bg-yellow-50 p-4 rounded-lg">
+              <div className="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-yellow-600">Progress</p>
-                    <p className="text-2xl font-bold text-yellow-700">↑ 0.2</p>
+                    <p className="text-sm text-yellow-600 dark:text-yellow-400">Progress</p>
+                    <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">↑ 0.2</p>
                   </div>
-                  <TrendingUp className="text-yellow-500" size={24} />
+                  <TrendingUp className="text-yellow-500 dark:text-yellow-400" size={24} />
                 </div>
               </div>
             </div>
 
             {/* Course Performance */}
-            <div className="bg-white rounded-lg shadow p-6 mb-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Course Performance</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Course Performance</h3>
               <div className="space-y-4">
                 {mockResults.courses.map((course, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-gray-700">{course.name}</span>
-                        <span className="text-sm font-bold text-blue-600">{course.grade}</span>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{course.name}</span>
+                        <span className="text-sm font-bold text-blue-600 dark:text-blue-400">{course.grade}</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div 
-                          className="bg-blue-600 h-2 rounded-full" 
+                          className="bg-blue-600 dark:bg-blue-400 h-2 rounded-full" 
                           style={{ width: `${course.score}%` }}
                         ></div>
                       </div>
                     </div>
-                    <span className="ml-4 text-sm font-medium text-gray-600">{course.score}%</span>
+                    <span className="ml-4 text-sm font-medium text-gray-600 dark:text-gray-400">{course.score}%</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* GPA Progress */}
-            <div className="bg-white rounded-lg shadow p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">GPA Progress</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">GPA Progress</h3>
               <div className="h-64">
                 <div className="flex items-end h-48 space-x-4">
                   {mockResults.progress.map((semester, index) => (
                     <div key={index} className="flex-1 flex flex-col items-center">
                       <div 
-                        className="w-full bg-blue-600 rounded-t-lg"
+                        className="w-full bg-blue-600 dark:bg-blue-400 rounded-t-lg"
                         style={{ height: `${(semester.gpa / 4) * 100}%` }}
                       ></div>
-                      <span className="text-xs text-gray-500 mt-2">{semester.semester}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 mt-2">{semester.semester}</span>
                     </div>
                   ))}
                 </div>
@@ -710,44 +708,44 @@ export default function StudentsManagement() {
       {/* Edit Student Modal */}
       {showEditModal && editStudent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Edit Student</h2>
-              <button onClick={() => setShowEditModal(false)} className="text-gray-500 hover:text-gray-700">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Edit Student</h2>
+              <button onClick={() => setShowEditModal(false)} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                 <X size={24} />
               </button>
             </div>
             <form onSubmit={handleEditSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
                   <input
                     type="text"
                     name="name"
                     value={editStudent.name}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                   <input
                     type="email"
                     name="email"
                     value={editStudent.email}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Program</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Program</label>
                   <select
                     name="program"
                     value={editStudent.program}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   >
                     <option value="">Select Program</option>
@@ -757,12 +755,12 @@ export default function StudentsManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Year</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Year</label>
                   <select
                     name="year"
                     value={editStudent.year}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   >
                     <option value="">Select Year</option>
@@ -772,34 +770,34 @@ export default function StudentsManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
                   <input
                     type="tel"
                     name="phone"
                     value={editStudent.phone}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Date of Birth</label>
                   <input
                     type="date"
                     name="dateOfBirth"
                     value={editStudent.dateOfBirth}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Gender</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Gender</label>
                   <select
                     name="gender"
                     value={editStudent.gender}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   >
                     <option value="">Select Gender</option>
@@ -809,24 +807,24 @@ export default function StudentsManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">Nationality</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nationality</label>
                   <input
                     type="text"
                     name="nationality"
                     value={editStudent.nationality}
                     onChange={handleEditInputChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700">Address</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Address</label>
                   <textarea
                     name="address"
                     value={editStudent.address}
                     onChange={handleEditInputChange}
                     rows="3"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     required
                   ></textarea>
                 </div>
@@ -835,13 +833,13 @@ export default function StudentsManagement() {
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800"
                 >
                   Save Changes
                 </button>
@@ -854,26 +852,26 @@ export default function StudentsManagement() {
       {/* Delete Student Modal */}
       {showDeleteModal && deleteStudent && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800">Delete Student</h2>
-              <button onClick={cancelDelete} className="text-gray-500 hover:text-gray-700">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">Delete Student</h2>
+              <button onClick={cancelDelete} className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
                 <X size={24} />
               </button>
             </div>
-            <div className="mb-6 text-gray-700">
+            <div className="mb-6 text-gray-700 dark:text-gray-300">
               Are you sure you want to delete <span className="font-semibold">{deleteStudent.name}</span>? This action cannot be undone.
             </div>
             <div className="flex justify-end space-x-3">
               <button
                 onClick={cancelDelete}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800"
               >
                 Delete
               </button>

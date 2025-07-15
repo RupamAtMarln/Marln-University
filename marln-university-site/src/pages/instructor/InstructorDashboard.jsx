@@ -45,7 +45,7 @@ const events = [
 
 export default function InstructorDashboard() {
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="instructor" />
       <div className="flex-1 overflow-auto p-6">
         <div className="flex flex-col lg:flex-row gap-6">
@@ -54,11 +54,11 @@ export default function InstructorDashboard() {
             {/* Top Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((stat) => (
-                <div key={stat.label} className={`rounded-xl shadow p-6 flex items-center gap-4 ${stat.bg}`}>
+                <div key={stat.label} className={`rounded-xl shadow p-6 flex items-center gap-4 ${stat.bg} dark:bg-gray-800`}>
                   <stat.icon size={36} className={stat.color} />
                   <div>
-                    <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
-                    <div className="text-gray-500 text-sm">{stat.label}</div>
+                    <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">{stat.value}</div>
+                    <div className="text-gray-500 dark:text-gray-300 text-sm">{stat.label}</div>
                   </div>
                 </div>
               ))}
@@ -67,10 +67,10 @@ export default function InstructorDashboard() {
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Course Performance (Line Chart) */}
-              <div className="bg-white rounded-xl shadow p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                 <div className="flex justify-between items-center mb-2">
-                  <div className="font-semibold text-gray-700">Course Performance</div>
-                  <select className="border rounded px-2 py-1 text-sm">
+                  <div className="font-semibold text-gray-700 dark:text-gray-100">Course Performance</div>
+                  <select className="border rounded px-2 py-1 text-sm dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">
                     <option>Last 7 Classes</option>
                     <option>Last Semester</option>
                   </select>
@@ -88,10 +88,10 @@ export default function InstructorDashboard() {
                 </svg>
               </div>
               {/* Student Engagement (Bar Chart) */}
-              <div className="bg-white rounded-xl shadow p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                 <div className="flex justify-between items-center mb-2">
-                  <div className="font-semibold text-gray-700">Student Engagement</div>
-                  <select className="border rounded px-2 py-1 text-sm">
+                  <div className="font-semibold text-gray-700 dark:text-gray-100">Student Engagement</div>
+                  <select className="border rounded px-2 py-1 text-sm dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">
                     <option>Last 7 Classes</option>
                     <option>Last Semester</option>
                   </select>
@@ -108,8 +108,8 @@ export default function InstructorDashboard() {
             {/* Middle Widgets */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Messages */}
-              <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-                <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><MessageCircle size={18}/> Student Messages</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+                <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><MessageCircle size={18}/> Student Messages</div>
                 <div className="flex-1 flex flex-col gap-3">
                   {messages.map((msg, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -126,8 +126,8 @@ export default function InstructorDashboard() {
                 </div>
               </div>
               {/* Quick Access */}
-              <div className="bg-white rounded-xl shadow p-6 flex flex-col gap-4 items-center justify-center">
-                <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><ArrowUpRight size={18}/> Quick Access</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col gap-4 items-center justify-center">
+                <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><ArrowUpRight size={18}/> Quick Access</div>
                 <div className="flex gap-4">
                   {quickAccess.map((q, i) => (
                     <a key={i} href={q.href} className={`flex flex-col items-center justify-center p-4 rounded-lg shadow-sm ${q.color} hover:bg-opacity-80 transition`}>
@@ -138,8 +138,8 @@ export default function InstructorDashboard() {
                 </div>
               </div>
               {/* Upcoming Events */}
-              <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-                <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><Calendar size={18}/> Upcoming Events</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+                <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><Calendar size={18}/> Upcoming Events</div>
                 <div className="flex flex-col gap-3">
                   {events.map((e, i) => (
                     <div key={i} className="flex items-center gap-3">
@@ -158,12 +158,12 @@ export default function InstructorDashboard() {
             </div>
 
             {/* Notice Board */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><Bell size={18}/> Notice Board</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><Bell size={18}/> Notice Board</div>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-sm">
                   <thead>
-                    <tr className="text-gray-500">
+                    <tr className="text-gray-500 dark:text-gray-300">
                       <th className="py-2 px-2 text-left">Title</th>
                       <th className="py-2 px-2 text-left">By</th>
                       <th className="py-2 px-2 text-left">Date</th>
@@ -172,8 +172,8 @@ export default function InstructorDashboard() {
                   </thead>
                   <tbody>
                     {noticeBoard.map((n, i) => (
-                      <tr key={i} className="border-t">
-                        <td className="py-2 px-2 font-semibold text-blue-700">{n.title}</td>
+                      <tr key={i} className="border-t dark:border-gray-700">
+                        <td className="py-2 px-2 font-semibold text-blue-700 dark:text-blue-400">{n.title}</td>
                         <td className="py-2 px-2">{n.by}</td>
                         <td className="py-2 px-2">{n.date}</td>
                         <td className="py-2 px-2 text-right">{n.views}</td>
@@ -185,16 +185,16 @@ export default function InstructorDashboard() {
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><TrendingUp size={18}/> Recent Activity</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-2 flex items-center gap-2"><TrendingUp size={18}/> Recent Activity</div>
               <div className="flex flex-col gap-3">
                 {activities.map((a, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <a.icon size={22} className={a.color} />
                     <div className="flex-1">
-                      <div className="font-semibold text-gray-800 text-sm">{a.desc}</div>
+                      <div className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{a.desc}</div>
                     </div>
-                    <div className="text-xs text-gray-400 whitespace-nowrap">{a.time}</div>
+                    <div className="text-xs text-gray-400 dark:text-gray-300 whitespace-nowrap">{a.time}</div>
                   </div>
                 ))}
               </div>

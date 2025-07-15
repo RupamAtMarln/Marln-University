@@ -83,38 +83,38 @@ function Grades() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="student" />
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-800">My Grades</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">My Grades</h1>
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-xl shadow mb-6 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow mb-6 p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="text"
                   placeholder="Search courses..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
                 />
               </div>
               <select
                 value={semesterFilter}
                 onChange={(e) => setSemesterFilter(e.target.value)}
-                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
               >
                 <option value="all">All Semesters</option>
                 <option value="Spring 2024">Spring 2024</option>
                 <option value="Fall 2023">Fall 2023</option>
               </select>
-              <button className="flex items-center justify-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50">
+              <button className="flex items-center justify-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700">
                 <Filter size={20} />
                 More Filters
               </button>
@@ -123,29 +123,29 @@ function Grades() {
 
           {/* Grades Overview */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-white rounded-xl shadow p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Overall GPA</p>
-                  <p className="text-2xl font-bold text-gray-800">3.5</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">Overall GPA</p>
+                  <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">3.5</p>
                 </div>
                 <Award className="h-8 w-8 text-blue-500" />
               </div>
             </div>
-            <div className="bg-white rounded-xl shadow p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Courses Completed</p>
-                  <p className="text-2xl font-bold text-gray-800">12</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">Courses Completed</p>
+                  <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">12</p>
                 </div>
                 <BookOpen className="h-8 w-8 text-green-500" />
               </div>
             </div>
-            <div className="bg-white rounded-xl shadow p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Current Courses</p>
-                  <p className="text-2xl font-bold text-gray-800">5</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-300">Current Courses</p>
+                  <p className="text-2xl font-bold text-gray-800 dark:text-gray-100">5</p>
                 </div>
                 <BarChart2 className="h-8 w-8 text-purple-500" />
               </div>
@@ -157,16 +157,16 @@ function Grades() {
             {filteredCourses.map(course => (
               <div
                 key={course.id}
-                className="bg-white rounded-xl shadow overflow-hidden hover:shadow-md transition-shadow duration-200"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden hover:shadow-md transition-shadow duration-200"
               >
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="font-semibold text-gray-800">{course.name}</h3>
-                      <p className="text-sm text-gray-500">{course.code} - {course.instructor}</p>
+                      <h3 className="font-semibold text-gray-800 dark:text-gray-100">{course.name}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-300">{course.code} - {course.instructor}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`text-2xl font-bold ${getGradeColor(course.grade)}`}>
+                      <span className={`text-2xl font-bold ${getGradeColor(course.grade)} dark:text-blue-400`}>
                         {course.grade}%
                       </span>
                       {getTrendIcon(course.trend)}
@@ -176,10 +176,10 @@ function Grades() {
                   <div className="space-y-3">
                     {course.assignments.map((assignment, index) => (
                       <div key={index} className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600">{assignment.name}</span>
+                        <span className="text-gray-600 dark:text-gray-300">{assignment.name}</span>
                         <div className="flex items-center gap-4">
-                          <span className="text-gray-600">{assignment.weight}%</span>
-                          <span className={`font-medium ${getGradeColor(assignment.grade)}`}>
+                          <span className="text-gray-600 dark:text-gray-300">{assignment.weight}%</span>
+                          <span className={`font-medium ${getGradeColor(assignment.grade)} dark:text-blue-400`}>
                             {assignment.grade}/{assignment.maxPoints}
                           </span>
                         </div>

@@ -103,21 +103,21 @@ function Courses() {
   );
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="student" />
       <div className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">My Courses</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">My Courses</h1>
             <div className="relative">
               <input
                 type="text"
                 placeholder="Search courses..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-100"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-500" />
             </div>
           </div>
 
@@ -125,22 +125,22 @@ function Courses() {
             {filteredCourses.map((course) => (
               <div
                 key={course.id}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
               >
                 <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{course.title}</h3>
-                  <p className="text-sm text-gray-600 mb-4">{course.description}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">{course.title}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{course.description}</p>
                   
                   <div className="space-y-3">
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <Users className="h-4 w-4 mr-2" />
                       <span>Instructor: {course.instructor}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <Clock className="h-4 w-4 mr-2" />
                       <span>{course.schedule}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <Calendar className="h-4 w-4 mr-2" />
                       <span>Next Class: {new Date(course.nextClass).toLocaleString()}</span>
                     </div>
@@ -148,10 +148,10 @@ function Courses() {
 
                   <div className="mt-4">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-gray-700">Progress</span>
-                      <span className="text-sm font-medium text-gray-700">{course.progress}%</span>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Progress</span>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{course.progress}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div
                         className="bg-blue-600 h-2 rounded-full"
                         style={{ width: `${course.progress}%` }}
@@ -175,12 +175,12 @@ function Courses() {
         {/* Course Details Modal */}
         {selectedCourse && (
           <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-2 z-50">
-            <div className="relative bg-white rounded-2xl shadow-lg max-w-2xl w-full p-0 overflow-y-auto max-h-[90vh] border border-blue-50">
+            <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-lg max-w-2xl w-full p-0 overflow-y-auto max-h-[90vh] border border-blue-50 dark:border-blue-900">
               {/* Accent Bar & Floating Close Button */}
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-purple-400 to-pink-400 rounded-t-2xl" />
               <button
                 onClick={() => setSelectedCourse(null)}
-                className="absolute top-3 right-3 bg-white shadow border border-gray-100 text-gray-400 hover:text-red-400 p-1.5 rounded-full z-20 transition"
+                className="absolute top-3 right-3 bg-white dark:bg-gray-800 shadow border border-gray-100 dark:border-gray-700 text-gray-400 hover:text-red-400 p-1.5 rounded-full z-20 transition"
                 aria-label="Close"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -190,16 +190,16 @@ function Courses() {
               <div className="p-5 pt-4 pb-2">
                 <div className="flex items-center gap-2 mb-1">
                   <ShieldCheck className="text-blue-500 w-5 h-5" />
-                  <h2 className="text-xl font-bold text-gray-900 tracking-tight">{selectedCourse.title}</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 tracking-tight">{selectedCourse.title}</h2>
                 </div>
-                <p className="text-gray-600 text-base mb-4">{selectedCourse.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-base mb-4">{selectedCourse.description}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                   <div>
-                    <h3 className="flex items-center gap-1 text-blue-600 font-semibold text-base mb-1"><BookOpen className="w-4 h-4" /> Course Details</h3>
+                    <h3 className="flex items-center gap-1 text-blue-600 dark:text-blue-400 font-semibold text-base mb-1"><BookOpen className="w-4 h-4" /> Course Details</h3>
                     <ul className="mt-1 space-y-1">
-                      <li className="flex items-center text-sm text-gray-700"><Users className="h-4 w-4 mr-1 text-blue-300" />Instructor: <span className="ml-1 font-medium">{selectedCourse.instructor}</span></li>
-                      <li className="flex items-center text-sm text-gray-700"><Clock className="h-4 w-4 mr-1 text-purple-300" />Schedule: <span className="ml-1 font-medium">{selectedCourse.schedule}</span></li>
-                      <li className="flex items-center text-sm text-gray-700"><BookOpen className="h-4 w-4 mr-1 text-pink-300" />Room: <span className="ml-1 font-medium">{selectedCourse.room}</span></li>
+                      <li className="flex items-center text-sm text-gray-700 dark:text-gray-200"><Users className="h-4 w-4 mr-1 text-blue-300" />Instructor: <span className="ml-1 font-medium">{selectedCourse.instructor}</span></li>
+                      <li className="flex items-center text-sm text-gray-700 dark:text-gray-200"><Clock className="h-4 w-4 mr-1 text-purple-300" />Schedule: <span className="ml-1 font-medium">{selectedCourse.schedule}</span></li>
+                      <li className="flex items-center text-sm text-gray-700 dark:text-gray-200"><BookOpen className="h-4 w-4 mr-1 text-pink-300" />Room: <span className="ml-1 font-medium">{selectedCourse.room}</span></li>
                     </ul>
                   </div>
                   <div>
@@ -234,8 +234,8 @@ function Courses() {
                     </h3>
                     <div className="space-y-4">
                       {courseContents[selectedCourse.title].weeks.map((week) => (
-                        <div key={week.week} className="bg-gray-50 rounded-lg p-4">
-                          <h4 className="text-sm font-semibold text-gray-700 mb-3">Week {week.week}</h4>
+                        <div key={week.week} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                          <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Week {week.week}</h4>
                           <div className="flex flex-wrap gap-2">
                             <button
                               onClick={() => navigate(`/student/courses/${selectedCourse.id}/pdf/${week.week}`, {
@@ -244,7 +244,7 @@ function Courses() {
                                   title: `${selectedCourse.title} - Week ${week.week} Materials`
                                 }
                               })}
-                              className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 text-sm text-gray-600 rounded-md hover:bg-gray-50"
+                              className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600"
                             >
                               <FileText className="mr-1.5 w-4 h-4 text-blue-500" />
                               View PDF
@@ -256,7 +256,7 @@ function Courses() {
                                   title: `${selectedCourse.title} - Week ${week.week} Lecture`
                                 }
                               })}
-                              className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 text-sm text-gray-600 rounded-md hover:bg-gray-50"
+                              className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600"
                             >
                               <Video className="mr-1.5 w-4 h-4 text-pink-500" />
                               Watch Video

@@ -125,17 +125,17 @@ function AnimatedNumber({ value }) {
 
 export default function StudentDashboard() {
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="student" />
       <div className="flex-1 overflow-auto p-6">
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {stats.map((stat) => (
-            <div key={stat.label} className={`rounded-xl shadow p-6 flex items-center gap-4 ${stat.bg}`}>
+            <div key={stat.label} className={`rounded-xl shadow p-6 flex items-center gap-4 ${stat.bg} dark:bg-gray-800`}>
               <stat.icon size={36} className={stat.color} />
               <div>
-                <div className="text-2xl font-bold text-gray-800"><AnimatedNumber value={parseInt(stat.value)} /></div>
-                <div className="text-gray-500 text-sm">{stat.label}</div>
+                <div className="text-2xl font-bold text-gray-800 dark:text-gray-100"><AnimatedNumber value={parseInt(stat.value)} /></div>
+                <div className="text-gray-500 dark:text-gray-300 text-sm">{stat.label}</div>
               </div>
             </div>
           ))}
@@ -145,10 +145,10 @@ export default function StudentDashboard() {
         <div className="grid grid-cols-12 gap-6">
           {/* Left Column - Academic Performance */}
           <div className="col-span-12 lg:col-span-8">
-            <div className="bg-white rounded-xl shadow p-6 mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-6">
               <div className="flex justify-between items-center mb-4">
-                <div className="font-semibold text-gray-700">Academic Performance</div>
-                <select className="border rounded px-2 py-1 text-sm">
+                <div className="font-semibold text-gray-700 dark:text-gray-100">Academic Performance</div>
+                <select className="border rounded px-2 py-1 text-sm dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">
                   <option>This Semester</option>
                   <option>Last Semester</option>
                 </select>
@@ -157,8 +157,8 @@ export default function StudentDashboard() {
                 {courseProgress.map((course) => (
                   <div key={course.name}>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-700">{course.name}</span>
-                      <span className="text-sm font-medium text-gray-700">{course.progress}%</span>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{course.name}</span>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{course.progress}%</span>
                     </div>
                     <AnimatedBar value={course.progress} color={course.color} />
                   </div>
@@ -169,27 +169,27 @@ export default function StudentDashboard() {
             {/* Study Progress Overview */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               {studyProgress.map((item, index) => (
-                <div key={index} className="bg-white rounded-xl shadow p-4">
+                <div key={index} className="bg-white dark:bg-gray-800 rounded-xl shadow p-4">
                   <div className="flex items-center justify-between mb-2">
                     <item.icon size={18} className="text-blue-600" />
                     <span className={`text-xs font-medium ${
                       item.trend.startsWith('+') ? 'text-green-600' : 'text-red-600'
                     }`}>{item.trend}</span>
                   </div>
-                  <div className="text-2xl font-bold text-gray-800">{item.value}</div>
-                  <div className="text-sm text-gray-500">{item.label}</div>
+                  <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">{item.value}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-300">{item.label}</div>
                 </div>
               ))}
             </div>
 
             {/* Upcoming Assignments */}
-            <div className="bg-white rounded-xl shadow p-4 mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-4 mb-6">
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
                   <Clock size={16} className="text-blue-600" />
-                  <span className="font-medium text-gray-700">Upcoming Assignments</span>
+                  <span className="font-medium text-gray-700 dark:text-gray-100">Upcoming Assignments</span>
                 </div>
-                <a href="#" className="text-blue-600 text-sm hover:underline flex items-center">
+                <a href="#" className="text-blue-600 dark:text-blue-400 text-sm hover:underline flex items-center">
                   View All
                   <svg className="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -198,39 +198,39 @@ export default function StudentDashboard() {
               </div>
               <div className="space-y-1">
                 {upcomingAssignments.map((assignment, index) => (
-                  <div key={index} className="flex items-center justify-between py-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                  <div key={index} className="flex items-center justify-between py-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
                     <div className="flex items-center gap-2">
                       <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                        assignment.course.includes('Mathematics') ? 'bg-blue-50' :
-                        assignment.course.includes('Physics') ? 'bg-purple-50' :
-                        'bg-green-50'
+                        assignment.course.includes('Mathematics') ? 'bg-blue-50 dark:bg-blue-900' :
+                        assignment.course.includes('Physics') ? 'bg-purple-50 dark:bg-purple-900' :
+                        'bg-green-50 dark:bg-green-900'
                       }`}>
                         <span className={`text-sm font-medium ${
-                          assignment.course.includes('Mathematics') ? 'text-blue-600' :
-                          assignment.course.includes('Physics') ? 'text-purple-600' :
-                          'text-green-600'
+                          assignment.course.includes('Mathematics') ? 'text-blue-600 dark:text-blue-300' :
+                          assignment.course.includes('Physics') ? 'text-purple-600 dark:text-purple-300' :
+                          'text-green-600 dark:text-green-300'
                         }`}>
                           {assignment.course.split(' ')[0][0]}
                         </span>
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-gray-900">{assignment.title}</div>
-                        <div className="text-xs text-gray-500">{assignment.course}</div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{assignment.title}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-300">{assignment.course}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-right">
-                        <div className="text-sm text-gray-900">Due Mar {assignment.dueDate.split('-')[2]}</div>
+                        <div className="text-sm text-gray-900 dark:text-gray-100">Due Mar {assignment.dueDate.split('-')[2]}</div>
                         <div className="text-xs text-red-500">{assignment.daysLeft} days left</div>
                       </div>
                       <div className={`px-2 py-0.5 rounded-full text-xs ${
-                        assignment.status === 'pending' ? 'bg-yellow-50 text-yellow-600' :
-                        assignment.status === 'in-progress' ? 'bg-blue-50 text-blue-600' :
-                        'bg-gray-50 text-gray-600'
+                        assignment.status === 'pending' ? 'bg-yellow-50 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300' :
+                        assignment.status === 'in-progress' ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' :
+                        'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300'
                       }`}>
                         {assignment.status.replace('-', ' ')}
                       </div>
-                      <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3 h-3 text-gray-400 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
@@ -240,18 +240,18 @@ export default function StudentDashboard() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-xl shadow p-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="font-semibold text-gray-700">Quick Actions</h2>
+                <h2 className="font-semibold text-gray-700 dark:text-gray-100">Quick Actions</h2>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {quickActions.map((action, index) => (
                   <button
                     key={index}
-                    className={`flex flex-col items-center justify-center p-4 rounded-xl bg-${action.color}-50 hover:bg-${action.color}-100 transition-colors`}
+                    className={`flex flex-col items-center justify-center p-4 rounded-xl bg-${action.color}-50 hover:bg-${action.color}-100 transition-colors dark:bg-${action.color}-900 dark:hover:bg-${action.color}-800`}
                   >
-                    <action.icon size={24} className={`text-${action.color}-600 mb-2`} />
-                    <span className="text-sm font-medium text-gray-700">{action.label}</span>
+                    <action.icon size={24} className={`text-${action.color}-600 mb-2 dark:text-${action.color}-400`} />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{action.label}</span>
                   </button>
                 ))}
               </div>
@@ -260,18 +260,18 @@ export default function StudentDashboard() {
 
           {/* Right Column - Schedule */}
           <div className="col-span-12 lg:col-span-4">
-            <div className="bg-white rounded-xl shadow p-6">
-              <div className="font-semibold text-gray-700 mb-4">Today's Schedule</div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <div className="font-semibold text-gray-700 dark:text-gray-100 mb-4">Today's Schedule</div>
               <div className="space-y-4">
                 {upcomingClasses.map((class_, index) => (
-                  <div key={index} className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50">
+                  <div key={index} className="flex items-start gap-4 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
                     <div className="flex-shrink-0 w-16 text-center">
-                      <div className="text-sm font-medium text-gray-900">{class_.time}</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{class_.time}</div>
                     </div>
                     <div className="flex-1">
-                      <div className="font-medium text-gray-900">{class_.title}</div>
-                      <div className="text-sm text-gray-500">{class_.room}</div>
-                      <div className="text-sm text-gray-500">Instructor: {class_.instructor}</div>
+                      <div className="font-medium text-gray-900 dark:text-gray-100">{class_.title}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-300">{class_.room}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-300">Instructor: {class_.instructor}</div>
                     </div>
                   </div>
                 ))}
@@ -279,20 +279,20 @@ export default function StudentDashboard() {
             </div>
 
             {/* Important Deadlines */}
-            <div className="bg-white rounded-xl shadow p-6 mb-6">
-              <h2 className="font-semibold text-gray-700 mb-4">Important Deadlines</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-6">
+              <h2 className="font-semibold text-gray-700 dark:text-gray-100 mb-4">Important Deadlines</h2>
               <div className="space-y-4">
                 {upcomingDeadlines.map((deadline, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-gray-50">
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
                     <div className={`w-2 h-2 mt-2 rounded-full ${
                       deadline.priority === 'high' ? 'bg-red-500' : 'bg-yellow-500'
                     }`} />
                     <div>
-                      <div className="text-sm font-medium text-gray-900">{deadline.title}</div>
-                      <div className="text-xs text-gray-500">{deadline.course}</div>
-                      <div className="text-xs text-gray-500 mt-1">Due: {new Date(deadline.deadline).toLocaleDateString()}</div>
+                      <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{deadline.title}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-300">{deadline.course}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-300 mt-1">Due: {new Date(deadline.deadline).toLocaleDateString()}</div>
                     </div>
-                    <span className="text-xs font-medium px-2 py-1 rounded-full bg-gray-200 text-gray-700 ml-auto">
+                    <span className="text-xs font-medium px-2 py-1 rounded-full bg-gray-200 text-gray-700 ml-auto dark:bg-gray-700 dark:text-gray-200">
                       {deadline.type}
                     </span>
                   </div>
@@ -301,34 +301,34 @@ export default function StudentDashboard() {
             </div>
 
             {/* Study Resources */}
-            <div className="bg-white rounded-xl shadow p-6">
-              <h2 className="font-semibold text-gray-700 mb-4">Study Resources</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+              <h2 className="font-semibold text-gray-700 dark:text-gray-100 mb-4">Study Resources</h2>
               <div className="space-y-3">
-                <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
-                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                    <Library size={20} className="text-purple-600" />
+                <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center dark:bg-purple-900">
+                    <Library size={20} className="text-purple-600 dark:text-purple-400" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900">Digital Library</div>
-                    <div className="text-xs text-gray-500">Access course materials</div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Digital Library</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">Access course materials</div>
                   </div>
                 </a>
-                <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
-                  <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-                    <Users2 size={20} className="text-green-600" />
+                <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center dark:bg-green-900">
+                    <Users2 size={20} className="text-green-600 dark:text-green-400" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900">Study Groups</div>
-                    <div className="text-xs text-gray-500">Join or create study groups</div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Study Groups</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">Join or create study groups</div>
                   </div>
                 </a>
-                <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                    <MessageCircle size={20} className="text-blue-600" />
+                <a href="#" className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center dark:bg-blue-900">
+                    <MessageCircle size={20} className="text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900">Academic Support</div>
-                    <div className="text-xs text-gray-500">Get help from tutors</div>
+                    <div className="text-sm font-medium text-gray-900 dark:text-gray-100">Academic Support</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">Get help from tutors</div>
                   </div>
                 </a>
               </div>
@@ -339,29 +339,29 @@ export default function StudentDashboard() {
         {/* Bottom Widgets */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* Messages */}
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-            <div className="font-semibold text-gray-700 mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+            <div className="font-semibold text-gray-700 dark:text-gray-100 mb-4 flex items-center gap-2">
               <MessageCircle size={18}/> Messages
             </div>
             <div className="flex-1 flex flex-col gap-3">
               {messages.map((msg, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${msg.color}`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${msg.color} dark:bg-blue-600`}>
                     <Users2 size={28} className="text-white" />
                   </div>
                   <div className="flex-1">
-                    <div className="font-semibold text-gray-800 text-sm">{msg.name}</div>
-                    <div className="text-xs text-gray-500">{msg.msg}</div>
+                    <div className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{msg.name}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-300">{msg.msg}</div>
                   </div>
-                  <div className="text-xs text-gray-400 whitespace-nowrap">{msg.time}</div>
+                  <div className="text-xs text-gray-400 dark:text-gray-300 whitespace-nowrap">{msg.time}</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Recent Activities */}
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-            <div className="font-semibold text-gray-700 mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+            <div className="font-semibold text-gray-700 dark:text-gray-100 mb-4 flex items-center gap-2">
               <Bell size={18}/> Recent Activities
             </div>
             <div className="flex-1 flex flex-col gap-3">
@@ -369,33 +369,33 @@ export default function StudentDashboard() {
                 <div key={i} className="flex items-center gap-3">
                   <activity.icon size={22} className={activity.color} />
                   <div className="flex-1">
-                    <div className="font-semibold text-gray-800 text-sm">{activity.desc}</div>
+                    <div className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{activity.desc}</div>
                   </div>
-                  <div className="text-xs text-gray-400 whitespace-nowrap">{activity.time}</div>
+                  <div className="text-xs text-gray-400 dark:text-gray-300 whitespace-nowrap">{activity.time}</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="bg-white rounded-xl shadow p-6 flex flex-col">
-            <div className="font-semibold text-gray-700 mb-4 flex items-center gap-2">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col">
+            <div className="font-semibold text-gray-700 dark:text-gray-100 mb-4 flex items-center gap-2">
               <Library size={18}/> Quick Links
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <button className="p-3 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
+              <button className="p-3 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800">
                 <BookOpen size={20} className="mx-auto mb-1" />
                 <span className="text-sm">Course Materials</span>
               </button>
-              <button className="p-3 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-colors">
+              <button className="p-3 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition-colors dark:bg-green-900 dark:text-green-400 dark:hover:bg-green-800">
                 <ClipboardList size={20} className="mx-auto mb-1" />
                 <span className="text-sm">Assignments</span>
               </button>
-              <button className="p-3 rounded-lg bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors">
+              <button className="p-3 rounded-lg bg-purple-50 text-purple-600 hover:bg-purple-100 transition-colors dark:bg-purple-900 dark:text-purple-400 dark:hover:bg-purple-800">
                 <Calendar size={20} className="mx-auto mb-1" />
                 <span className="text-sm">Schedule</span>
               </button>
-              <button className="p-3 rounded-lg bg-yellow-50 text-yellow-600 hover:bg-yellow-100 transition-colors">
+              <button className="p-3 rounded-lg bg-yellow-50 text-yellow-600 hover:bg-yellow-100 transition-colors dark:bg-yellow-900 dark:text-yellow-400 dark:hover:bg-yellow-800">
                 <Award size={20} className="mx-auto mb-1" />
                 <span className="text-sm">Grades</span>
               </button>

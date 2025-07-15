@@ -100,22 +100,22 @@ export default function TeachingSchedule() {
   const upcomingEvents = events.filter(e => new Date(e.date) >= new Date(year, month, 1)).sort((a, b) => new Date(a.date) - new Date(b.date)).slice(0, 5);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar role="instructor" />
       <div className="flex-1 overflow-auto p-8 flex flex-col lg:flex-row gap-8">
         {/* Calendar */}
-        <div className="bg-white rounded-xl shadow-xl p-6 flex-1">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 flex-1">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-800">Teaching Schedule</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Teaching Schedule</h1>
             <div className="flex gap-2">
-              <button onClick={goToPrevMonth} className="px-2 py-1 bg-gray-200 rounded">&lt;</button>
-              <span className="font-semibold text-lg">{monthStr} {year}</span>
-              <button onClick={goToNextMonth} className="px-2 py-1 bg-gray-200 rounded">&gt;</button>
+              <button onClick={goToPrevMonth} className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded">&lt;</button>
+              <span className="font-semibold text-lg text-gray-800 dark:text-gray-100">{monthStr} {year}</span>
+              <button onClick={goToNextMonth} className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded">&gt;</button>
             </div>
           </div>
           <table className="w-full text-center select-none">
             <thead>
-              <tr className="text-gray-500">
+              <tr className="text-gray-500 dark:text-gray-300">
                 <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
               </tr>
             </thead>
@@ -123,8 +123,8 @@ export default function TeachingSchedule() {
               {monthDays.map((week, i) => (
                 <tr key={i}>
                   {week.map((d, j) => (
-                    <td key={j} className={`h-20 w-20 align-top border ${d ? 'bg-gray-50 hover:bg-blue-50 cursor-pointer' : 'bg-gray-100'}`} onClick={() => d && openAddEvent(`${year}-` + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0'))}>
-                      <div className={`text-sm font-semibold ${d && new Date(year, month, d).toDateString() === today.toDateString() ? 'text-blue-600' : 'text-gray-700'}`}>{d || ''}</div>
+                    <td key={j} className={`h-20 w-20 align-top border border-gray-200 dark:border-gray-700 ${d ? 'bg-gray-50 dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-blue-900 cursor-pointer' : 'bg-gray-100 dark:bg-gray-800'}`} onClick={() => d && openAddEvent(`${year}-` + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0'))}>
+                      <div className={`text-sm font-semibold ${d && new Date(year, month, d).toDateString() === today.toDateString() ? 'text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-200'}`}>{d || ''}</div>
                       <div className="flex flex-col gap-1 mt-1">
                         {d && eventsForDay(d).map(ev => (
                           <div key={ev.id} className={`rounded px-2 py-1 text-xs text-white ${eventColors[ev.type]} cursor-pointer`} onClick={e => { e.stopPropagation(); openEvent(ev); }}>{ev.title}</div>
@@ -139,15 +139,15 @@ export default function TeachingSchedule() {
         </div>
         {/* Upcoming Events Sidebar */}
         <div className="w-full lg:w-80 flex-shrink-0">
-          <div className="bg-white rounded-xl shadow-xl p-6">
-            <div className="font-semibold text-gray-700 mb-2 flex items-center gap-2"><Calendar size={18}/> Upcoming Events</div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6">
+            <div className="font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-2"><Calendar size={18}/> Upcoming Events</div>
             <div className="flex flex-col gap-3">
-              {upcomingEvents.length === 0 && <div className="text-gray-400 text-sm">No upcoming events.</div>}
+              {upcomingEvents.length === 0 && <div className="text-gray-400 dark:text-gray-500 text-sm">No upcoming events.</div>}
               {upcomingEvents.map(ev => (
-                <div key={ev.id} className="flex flex-col gap-1 border-b pb-2 last:border-b-0 last:pb-0">
-                  <div className={`font-semibold ${eventColors[ev.type] || 'bg-gray-200'} text-white rounded px-2 py-1 inline-block w-fit`}>{ev.title}</div>
-                  <div className="text-xs text-gray-500">{ev.date} {ev.time}</div>
-                  <div className="text-xs text-gray-600">{ev.desc}</div>
+                <div key={ev.id} className="flex flex-col gap-1 border-b border-gray-200 dark:border-gray-700 pb-2 last:border-b-0 last:pb-0">
+                  <div className={`font-semibold ${eventColors[ev.type] || 'bg-gray-200 dark:bg-gray-700'} text-white rounded px-2 py-1 inline-block w-fit`}>{ev.title}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-300">{ev.date} {ev.time}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">{ev.desc}</div>
                 </div>
               ))}
             </div>
@@ -156,16 +156,16 @@ export default function TeachingSchedule() {
         {/* Event Modal */}
         {showModal && modalEvent && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative animate-fadeIn">
-              <button className="absolute top-4 right-4 text-gray-400 hover:text-gray-700" onClick={closeModal}><X size={28} /></button>
-              <h2 className="text-xl font-bold text-blue-700 mb-4">{modalEvent.id ? 'Edit Event' : 'Add Event'}</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md p-8 relative animate-fadeIn">
+              <button className="absolute top-4 right-4 text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100" onClick={closeModal}><X size={28} /></button>
+              <h2 className="text-xl font-bold text-blue-700 dark:text-blue-400 mb-4">{modalEvent.id ? 'Edit Event' : 'Add Event'}</h2>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Title</label>
-                <input type="text" className="border rounded px-2 py-1 w-full" value={modalEvent.title} onChange={e => setModalEvent({ ...modalEvent, title: e.target.value })} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Title</label>
+                <input type="text" className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 w-full dark:bg-gray-900 dark:text-gray-100" value={modalEvent.title} onChange={e => setModalEvent({ ...modalEvent, title: e.target.value })} />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Type</label>
-                <select className="border rounded px-2 py-1 w-full" value={modalEvent.type} onChange={e => setModalEvent({ ...modalEvent, type: e.target.value })}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Type</label>
+                <select className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 w-full dark:bg-gray-900 dark:text-gray-100" value={modalEvent.type} onChange={e => setModalEvent({ ...modalEvent, type: e.target.value })}>
                   <option value="class">Class</option>
                   <option value="assignment">Assignment</option>
                   <option value="activity">Activity</option>
@@ -174,18 +174,18 @@ export default function TeachingSchedule() {
                 </select>
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Date</label>
-                <input type="date" className="border rounded px-2 py-1 w-full" value={modalEvent.date} onChange={e => setModalEvent({ ...modalEvent, date: e.target.value })} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Date</label>
+                <input type="date" className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 w-full dark:bg-gray-900 dark:text-gray-100" value={modalEvent.date} onChange={e => setModalEvent({ ...modalEvent, date: e.target.value })} />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Time</label>
-                <input type="time" className="border rounded px-2 py-1 w-full" value={modalEvent.time} onChange={e => setModalEvent({ ...modalEvent, time: e.target.value })} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Time</label>
+                <input type="time" className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 w-full dark:bg-gray-900 dark:text-gray-100" value={modalEvent.time} onChange={e => setModalEvent({ ...modalEvent, time: e.target.value })} />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <textarea className="border rounded px-2 py-1 w-full" rows={2} value={modalEvent.desc} onChange={e => setModalEvent({ ...modalEvent, desc: e.target.value })} />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Description</label>
+                <textarea className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 w-full dark:bg-gray-900 dark:text-gray-100" rows={2} value={modalEvent.desc} onChange={e => setModalEvent({ ...modalEvent, desc: e.target.value })} />
               </div>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" onClick={saveEvent}>{modalEvent.id ? 'Save Changes' : 'Add Event'}</button>
+              <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800" onClick={saveEvent}>{modalEvent.id ? 'Save Changes' : 'Add Event'}</button>
             </div>
           </div>
         )}

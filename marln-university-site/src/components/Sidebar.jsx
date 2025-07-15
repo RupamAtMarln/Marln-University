@@ -16,10 +16,13 @@ import {
   MessageSquare,
   BookMarked,
   Award,
-  Library
+  Library,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import React from 'react';
 
 const adminMenuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
@@ -108,26 +111,42 @@ export default function Sidebar({ role: propRole }) {
     }
   };
 
+  const [theme, setTheme] = useState(() => {
+    // Check localStorage or default to 'light'
+    return localStorage.getItem('theme') || 'light';
+  });
+
+  // Apply theme to document body
+  React.useEffect(() => {
+    document.body.classList.remove('light', 'dark');
+    document.body.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   return (
-    <div className="w-64 h-screen bg-[#11296F] text-white flex flex-col">
+    <div className="w-64 h-screen bg-[#11296F] dark:bg-gray-900 text-white dark:text-gray-100 flex flex-col">
       {/* Logo */}
-      <div className="p-4 border-b border-[#0a1f4d]">
+      <div className="p-4 border-b border-[#0a1f4d] dark:border-gray-800">
         <h1 className="text-xl font-bold">NexusHive</h1>
       </div>
 
       {/* User Info */}
       <button
-        className="p-4 border-b border-[#0a1f4d] w-full text-left hover:bg-[#223a7a] transition-colors"
+        className="p-4 border-b border-[#0a1f4d] dark:border-gray-800 w-full text-left hover:bg-[#223a7a] dark:hover:bg-gray-800 transition-colors"
         onClick={() => navigate(getProfilePath())}
         aria-label="Edit Profile"
       >
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
+          <div className="w-8 h-8 rounded-full bg-blue-500 dark:bg-blue-700 flex items-center justify-center text-white text-sm font-bold">
             {getUserDisplayName().split(' ').map(word => word[0]).join('')}
           </div>
           <div>
             <p className="font-medium">{getUserDisplayName()}</p>
-            <p className="text-sm text-[#4a6baa]">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
+            <p className="text-sm text-[#4a6baa] dark:text-blue-300">{role.charAt(0).toUpperCase() + role.slice(1)}</p>
           </div>
         </div>
       </button>
@@ -138,8 +157,8 @@ export default function Sidebar({ role: propRole }) {
           <button
             key={item.id}
             onClick={() => navigate(item.path)}
-            className={`w-full px-4 py-3 flex items-center space-x-3 hover:bg-[#0a1f4d] transition-colors ${
-              activeTab === item.id ? 'bg-[#0a1f4d]' : ''
+            className={`w-full px-4 py-3 flex items-center space-x-3 hover:bg-[#0a1f4d] dark:hover:bg-gray-800 transition-colors ${
+              activeTab === item.id ? 'bg-[#0a1f4d] dark:bg-gray-800' : ''
             }`}
           >
             <item.icon size={20} />
@@ -148,10 +167,20 @@ export default function Sidebar({ role: propRole }) {
         ))}
       </div>
 
+      {/* Theme Switch Button */}
+      <button
+        onClick={toggleTheme}
+        className="p-4 border-t border-[#0a1f4d] dark:border-gray-800 flex items-center space-x-3 hover:bg-[#0a1f4d] dark:hover:bg-gray-800 transition-colors"
+        style={{ borderBottom: 'none' }}
+        aria-label="Toggle Dark/Light Theme"
+      >
+        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+        <span>{theme === 'light' ? 'Dark Theme' : 'Light Theme'}</span>
+      </button>
       {/* Logout Button */}
       <button
         onClick={handleLogout}
-        className="p-4 border-t border-[#0a1f4d] flex items-center space-x-3 hover:bg-[#0a1f4d] transition-colors"
+        className="p-4 border-t border-[#0a1f4d] dark:border-gray-800 flex items-center space-x-3 hover:bg-[#0a1f4d] dark:hover:bg-gray-800 transition-colors"
       >
         <LogOut size={20} />
         <span>Logout</span>
