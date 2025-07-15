@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage.jsx';
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import StudentsManagement from './pages/admin/StudentsManagement.jsx';
@@ -39,10 +39,12 @@ import CoursePdfViewer from './pages/student/CoursePdfViewer.jsx';
 import CourseVideoViewer from './pages/student/CourseVideoViewer.jsx';
 import Ecollab from './pages/student/Ecollab.jsx';
 
+const RouterComponent = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter;
+
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <RouterComponent>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
@@ -90,7 +92,7 @@ function App() {
             <Route path="/student/courses/:courseId/video/:week" element={<CourseVideoViewer />} />
           </Route>
         </Routes>
-      </Router>
+      </RouterComponent>
     </AuthProvider>
   );
 }
