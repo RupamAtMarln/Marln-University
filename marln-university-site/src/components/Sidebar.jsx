@@ -131,7 +131,7 @@ export default function Sidebar({ role: propRole }) {
     <div className="w-64 h-screen bg-[#11296F] dark:bg-gray-900 text-white dark:text-gray-100 flex flex-col">
       {/* Logo */}
       <div className="p-4 border-b border-[#0a1f4d] dark:border-gray-800">
-        <h1 className="text-xl font-bold">NexusHive</h1>
+        <h1 className="text-xl font-bold">MarLn</h1>
       </div>
 
       {/* User Info */}

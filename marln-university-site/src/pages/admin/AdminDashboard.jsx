@@ -251,8 +251,8 @@ export default function AdminDashboard() {
             </div>
             {/* Upgrade Widget */}
             <div className="bg-blue-50 dark:bg-blue-900 rounded-xl shadow p-6 flex flex-col items-center gap-2">
-              <div className="flex items-center gap-2 text-blue-700 font-bold"><ArrowUpRight size={20}/> Go Pro with NexusHive</div>
-              <div className="text-xs text-gray-500 text-center">Upgrade to NexusHive Pro for advanced features and support</div>
+              <div className="flex items-center gap-2 text-blue-700 font-bold"><ArrowUpRight size={20}/> Go Pro with MarLn</div>
+              <div className="text-xs text-gray-500 text-center">Upgrade to MarLn Pro for advanced features and support</div>
               <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm">Upgrade Now</button>
             </div>
           </div>

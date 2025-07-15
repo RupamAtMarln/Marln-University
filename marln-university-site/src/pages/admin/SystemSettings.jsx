@@ -3,19 +3,19 @@ import Sidebar from '../../components/Sidebar';
 import { CheckCircle, ShoppingCart, CreditCard, BookOpen, X } from 'lucide-react';
 
 const availableCourses = [
-  { id: 1, name: 'NexusHive: Data Science', price: 200 },
-  { id: 2, name: 'NexusHive: AI Fundamentals', price: 250 },
-  { id: 3, name: 'NexusHive: Cloud Computing', price: 180 },
-  { id: 4, name: 'NexusHive: Cybersecurity', price: 220 },
+  { id: 1, name: 'MarLn: Data Science', price: 200 },
+  { id: 2, name: 'MarLn: AI Fundamentals', price: 250 },
+  { id: 3, name: 'MarLn: Cloud Computing', price: 180 },
+  { id: 4, name: 'MarLn: Cybersecurity', price: 220 },
 ];
 
 const mockActive = [
-  { id: 1, name: 'NexusHive: Data Science', expires: '2025-12-31' },
-  { id: 2, name: 'NexusHive: AI Fundamentals', expires: '2025-09-30' },
+  { id: 1, name: 'MarLn: Data Science', expires: '2025-12-31' },
+  { id: 2, name: 'MarLn: AI Fundamentals', expires: '2025-09-30' },
 ];
 
 const mockBills = [
-  { id: 1, due: '2025-07-15', amount: 400, desc: 'Quarterly NexusHive Subscription' },
+  { id: 1, due: '2025-07-15', amount: 400, desc: 'Quarterly MarLn Subscription' },
 ];
 
 export default function SystemSettings() {
@@ -61,12 +61,12 @@ export default function SystemSettings() {
       <Sidebar role="admin" />
       <div className="flex-1 overflow-auto">
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">System Settings & NexusHive Integration</h1>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6">System Settings & MarLn Integration</h1>
 
           {/* Available Courses */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-2">
-              <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2"><BookOpen size={20}/> Available NexusHive Courses</h2>
+              <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2"><BookOpen size={20}/> Available MarLn Courses</h2>
               <button
                 onClick={() => setShowPurchaseModal(true)}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition-colors disabled:opacity-50"
@@ -99,7 +99,7 @@ export default function SystemSettings() {
             <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-2"><CheckCircle size={20}/> Active/Purchased Courses</h2>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
               {activeCourses.length === 0 ? (
-                <div className="text-gray-500 dark:text-gray-400">No active NexusHive courses.</div>
+                <div className="text-gray-500 dark:text-gray-400">No active MarLn courses.</div>
               ) : (
                 <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                   <thead className="bg-gray-50 dark:bg-gray-900">
@@ -123,7 +123,7 @@ export default function SystemSettings() {
 
           {/* Upcoming Bills */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-2"><CreditCard size={20}/> Upcoming NexusHive Bills</h2>
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2 flex items-center gap-2"><CreditCard size={20}/> Upcoming MarLn Bills</h2>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
               {bills.length === 0 ? (
                 <div className="text-gray-500 dark:text-gray-400">No upcoming bills.</div>
@@ -161,7 +161,7 @@ export default function SystemSettings() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Purchase NexusHive Courses</h2>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Purchase MarLn Courses</h2>
               <button onClick={() => setShowPurchaseModal(false)} className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100"><X size={24} /></button>
             </div>
             <form onSubmit={handlePurchase} className="space-y-4">

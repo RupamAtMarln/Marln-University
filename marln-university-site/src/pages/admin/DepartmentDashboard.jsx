@@ -3,7 +3,7 @@ import { UserCircle, Users2, Briefcase, School, Building2 } from 'lucide-react';
 
 // Dummy data for university hierarchy
 const university = {
-  name: 'NexusHive University',
+  name: 'MarLn University',
   dean: { name: 'Dr. Alice Smith', title: 'University Dean', avatar: '', color: 'bg-blue-700' },
   colleges: [
     {

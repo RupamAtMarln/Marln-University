@@ -259,7 +259,7 @@ export default function ProgramManagement() {
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-semibold text-lg">{course.name}</span>
                       {course.source === 'nexushive' && (
-                        <span className="ml-2 px-2 py-0.5 text-xs rounded bg-blue-600 text-white dark:bg-blue-700 dark:text-white">NexusHive</span>
+                        <span className="ml-2 px-2 py-0.5 text-xs rounded bg-blue-600 text-white dark:bg-blue-700 dark:text-white">MarLn</span>
                       )}
                     </div>
                     <div className="text-sm text-gray-500 dark:text-gray-300 mb-1">Code: {course.code}</div>

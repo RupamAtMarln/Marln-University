@@ -112,7 +112,7 @@ export default function CourseManagement() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{course.code}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-700 dark:text-blue-400">{course.credits}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-green-700 dark:text-green-400">{course.hours}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 capitalize">{course.source === 'nexushive' ? 'NexusHive' : 'University'}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 capitalize">{course.source === 'nexushive' ? 'MarLn' : 'University'}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                       <button onClick={() => openViewModal(course)} className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"><Eye size={18} /></button>
                       <button onClick={() => openEditModal(course)} className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"><Edit size={18} /></button>
@@ -125,7 +125,7 @@ export default function CourseManagement() {
 
           {/* Predefined Courses */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">NexusHive Predefined Courses</h2>
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">MarLn Predefined Courses</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {predefinedCourses.map((predef) => (
                 <div key={predef.id} className="border rounded-lg p-4 flex flex-col justify-between dark:border-gray-700">
@@ -240,7 +240,7 @@ export default function CourseManagement() {
             <div className="mb-2"><span className="font-semibold dark:text-gray-300">Code:</span> {selectedCourse.code}</div>
             <div className="mb-2"><span className="font-semibold dark:text-gray-300">Credits:</span> {selectedCourse.credits}</div>
             <div className="mb-2"><span className="font-semibold dark:text-gray-300">Instructional Hours:</span> {selectedCourse.hours}</div>
-            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Source:</span> {selectedCourse.source === 'nexushive' ? 'NexusHive' : 'University'}</div>
+            <div className="mb-2"><span className="font-semibold dark:text-gray-300">Source:</span> {selectedCourse.source === 'nexushive' ? 'MarLn' : 'University'}</div>
             <div className="mb-2"><span className="font-semibold dark:text-gray-300">Description:</span> {selectedCourse.description}</div>
           </div>
         </div>

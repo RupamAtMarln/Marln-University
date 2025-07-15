@@ -5,9 +5,9 @@ import { Calendar, BarChart3, Award } from 'lucide-react';
 // Mock analytics data
 const mockCourses = [
   { id: 1, name: 'Intro to Programming', completions: 120, enrollments: 150, type: 'university' },
-  { id: 2, name: 'NexusHive: Data Science', completions: 90, enrollments: 100, type: 'nexushive' },
+  { id: 2, name: 'MarLn: Data Science', completions: 90, enrollments: 100, type: 'nexushive' },
   { id: 3, name: 'Calculus I', completions: 80, enrollments: 110, type: 'university' },
-  { id: 4, name: 'NexusHive: AI Fundamentals', completions: 60, enrollments: 70, type: 'nexushive' },
+  { id: 4, name: 'MarLn: AI Fundamentals', completions: 60, enrollments: 70, type: 'nexushive' },
   { id: 5, name: 'English Literature', completions: 95, enrollments: 120, type: 'university' },
 ];
 
@@ -66,8 +66,8 @@ export default function Reports() {
               <BarChart3 size={32} className="text-purple-600" />
               <div>
                 <div className="text-lg font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
-                  NexusHive Performance
-                  <span className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded text-xs font-semibold ml-2">NexusHive</span>
+                  MarLn Performance
+                  <span className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded text-xs font-semibold ml-2">MarLn</span>
                 </div>
                 <div className="text-2xl font-bold text-purple-700 dark:text-purple-400">{nexusHivePerformance}</div>
               </div>
@@ -91,7 +91,7 @@ export default function Reports() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
                       {course.name}
                       {course.type === 'nexushive' && (
-                        <span className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded text-xs font-semibold ml-2">NexusHive</span>
+                        <span className="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded text-xs font-semibold ml-2">MarLn</span>
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-blue-700 dark:text-blue-300">{course.enrollments}</td>

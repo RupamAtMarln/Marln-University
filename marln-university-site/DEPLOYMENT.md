@@ -1,13 +1,13 @@
-# Deployment Guide: Marln-University Site
+# Deployment Guide: MarLn-University Site
 
-This guide explains how to deploy the Marln-University React (Vite) project to GitHub Pages.
+This guide explains how to deploy the MarLn-University React (Vite) project to GitHub Pages.
 
 ---
 
 ## Prerequisites
 - Node.js and npm installed
 - GitHub account
-- Project pushed to: https://github.com/RupamAtMarln/Marln-University.git
+- Project pushed to: https://github.com/RupamAtMarLn/MarLn-University.git
 
 ---
 
@@ -27,7 +27,7 @@ Add the following fields:
 
 - **Homepage**
   ```json
-  "homepage": "https://RupamAtMarln.github.io/Marln-University/"
+  "homepage": "https://RupamAtMarLn.github.io/MarLn-University/"
   ```
 - **Scripts**
   ```json
@@ -42,7 +42,7 @@ Add the following fields:
 Set the `base` property to your repo name:
 
 ```js
-base: '/Marln-University/',
+base: '/MarLn-University/',
 ```
 
 ---
@@ -64,7 +64,7 @@ This will:
 ## 5. Access Your Site
 
 Your site will be live at:
-[https://RupamAtMarln.github.io/Marln-University/](https://RupamAtMarln.github.io/Marln-University/)
+[https://RupamAtMarLn.github.io/MarLn-University/](https://RupamAtMarLn.github.io/MarLn-University/)
 
 ---
 
