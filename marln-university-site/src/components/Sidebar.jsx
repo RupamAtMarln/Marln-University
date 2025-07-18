@@ -23,6 +23,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const adminMenuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
@@ -67,6 +68,7 @@ export default function Sidebar({ role: propRole }) {
   const { role: authRole, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   // Use the role from props if provided, otherwise use the role from auth context
   const role = propRole || authRole;
@@ -109,22 +111,6 @@ export default function Sidebar({ role: propRole }) {
       default:
         return '/';
     }
-  };
-
-  const [theme, setTheme] = useState(() => {
-    // Check localStorage or default to 'light'
-    return localStorage.getItem('theme') || 'light';
-  });
-
-  // Apply theme to document body
-  React.useEffect(() => {
-    document.body.classList.remove('light', 'dark');
-    document.body.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   return (
