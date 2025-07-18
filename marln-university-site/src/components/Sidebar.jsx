@@ -23,16 +23,17 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const adminMenuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
   { id: 'students', label: 'Student Management', icon: Users2, path: '/admin/students' },
   { id: 'instructors', label: 'Instructor Management', icon: UserCircle, path: '/admin/instructors' },
   { id: 'programs', label: 'Program Management', icon: BookOpen, path: '/admin/programs' },
-  { id: 'departments', label: 'Depart. Management', icon: Building2, path: '/admin/departments' },
+  // { id: 'departments', label: 'Depart. Management', icon: Building2, path: '/admin/departments' },
   { id: 'courses', label: 'Course Management', icon: GraduationCap, path: '/admin/courses' },
   { id: 'documents', label: 'Document Management', icon: FileText, path: '/admin/documents' },
-  { id: 'calendar', label: 'Academic Calendar', icon: Calendar, path: '/admin/calendar' },
+  { id: 'calendar', label: 'Training Calendar', icon: Calendar, path: '/admin/calendar' },
   { id: 'notifications', label: 'Notifications/Queries', icon: Bell, path: '/admin/notifications' },
   { id: 'reports', label: 'Reports & Analytics', icon: BarChart3, path: '/admin/reports' },
   { id: 'users', label: 'User Management', icon: Users2, path: '/admin/users' },
@@ -67,6 +68,7 @@ export default function Sidebar({ role: propRole }) {
   const { role: authRole, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   // Use the role from props if provided, otherwise use the role from auth context
   const role = propRole || authRole;
@@ -109,22 +111,6 @@ export default function Sidebar({ role: propRole }) {
       default:
         return '/';
     }
-  };
-
-  const [theme, setTheme] = useState(() => {
-    // Check localStorage or default to 'light'
-    return localStorage.getItem('theme') || 'light';
-  });
-
-  // Apply theme to document body
-  React.useEffect(() => {
-    document.body.classList.remove('light', 'dark');
-    document.body.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   return (

@@ -3,11 +3,11 @@ import Sidebar from '../../components/Sidebar';
 import { Users2, Edit, Lock, X, ArrowUpCircle, Ban, CheckCircle, Archive, RotateCcw } from 'lucide-react';
 
 const mockUsers = [
-  { id: 1, name: 'Alice Smith', email: 'alice@university.edu', role: 'student', status: 'active', program: 'Computer Science' },
-  { id: 2, name: 'Bob Lee', email: 'bob@university.edu', role: 'student', status: 'suspended', program: 'Mathematics' },
-  { id: 3, name: 'Dr. Carol Jones', email: 'carol@university.edu', role: 'instructor', status: 'active', program: '' },
-  { id: 4, name: 'David Kim', email: 'david@university.edu', role: 'student', status: 'active', program: 'Physics' },
-  { id: 5, name: 'Prof. Eva Green', email: 'eva@university.edu', role: 'instructor', status: 'active', program: '' },
+  { id: 1, name: 'Alice Smith', email: 'alice@university.edu', role: 'student', status: 'active', program: 'Computer Science', credentialsCreated: true },
+  { id: 2, name: 'Bob Lee', email: 'bob@university.edu', role: 'student', status: 'suspended', program: 'Mathematics', credentialsCreated: false },
+  { id: 3, name: 'Dr. Carol Jones', email: 'carol@university.edu', role: 'instructor', status: 'active', program: '', credentialsCreated: true },
+  { id: 4, name: 'David Kim', email: 'david@university.edu', role: 'student', status: 'active', program: 'Physics', credentialsCreated: false },
+  { id: 5, name: 'Prof. Eva Green', email: 'eva@university.edu', role: 'instructor', status: 'active', program: '', credentialsCreated: true },
 ];
 
 // Add mock deleted users
@@ -29,6 +29,20 @@ export default function UserManagement() {
   const [showResetModal, setShowResetModal] = useState(false);
   const [resetUser, setResetUser] = useState(null);
   const [activeTab, setActiveTab] = useState('active');
+  const [showCredentialsModal, setShowCredentialsModal] = useState(false);
+  const [credentialsUser, setCredentialsUser] = useState(null);
+  const [generatedUsername, setGeneratedUsername] = useState('');
+  const [generatedPassword, setGeneratedPassword] = useState('');
+  const [mustChangePassword, setMustChangePassword] = useState(true);
+  const [emailSent, setEmailSent] = useState(false);
+
+  // Helper to generate random password
+  const generatePassword = () => {
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+    let pass = '';
+    for (let i = 0; i < 10; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+    return pass;
+  };
 
   // Suspend/Unsuspend
   const toggleSuspend = (user) => {
@@ -72,6 +86,29 @@ export default function UserManagement() {
   const handleRestore = (user) => {
     setDeletedUsers(deletedUsers.filter(u => u.id !== user.id));
     setUsers([...users, user]);
+  };
+
+  // Open credentials modal
+  const handleCreateCredentials = (user) => {
+    setCredentialsUser(user);
+    setGeneratedUsername(user.email);
+    setGeneratedPassword(generatePassword());
+    setMustChangePassword(true);
+    setEmailSent(false);
+    setShowCredentialsModal(true);
+  };
+
+  // Confirm creation
+  const handleConfirmCreateCredentials = () => {
+    setUsers(users.map(u => u.id === credentialsUser.id ? { ...u, credentialsCreated: true } : u));
+    setShowCredentialsModal(false);
+    alert('Credentials created for ' + credentialsUser.name);
+  };
+
+  // Send credentials via email (mock)
+  const handleSendEmail = () => {
+    setEmailSent(true);
+    alert('Credentials sent to ' + credentialsUser.email);
   };
 
   return (
@@ -132,6 +169,7 @@ export default function UserManagement() {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Role</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Program</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Credentials</th>
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
@@ -149,6 +187,13 @@ export default function UserManagement() {
                         )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-700 dark:text-blue-400">{user.program}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {user.credentialsCreated ? (
+                          <span className="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300">Created</span>
+                        ) : (
+                          <button onClick={() => handleCreateCredentials(user)} className="px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-700">Create Credentials</button>
+                        )}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                         <button onClick={() => openResetModal(user)} className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200" title="Reset Password"><Lock size={18} /></button>
                         <button onClick={() => toggleSuspend(user)} className={user.status === 'active' ? 'text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200' : 'text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200'} title={user.status === 'active' ? 'Suspend' : 'Unsuspend'}>
@@ -254,6 +299,40 @@ export default function UserManagement() {
                 <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Send Link</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Credentials Modal */}
+      {showCredentialsModal && credentialsUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Create Credentials</h2>
+              <button onClick={() => setShowCredentialsModal(false)} className="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100"><X size={24} /></button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Username (Email)</label>
+                <input type="text" className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-900 dark:text-gray-100" value={generatedUsername} readOnly />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">Password</label>
+                <input type="text" className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md py-2 px-3 dark:bg-gray-900 dark:text-gray-100" value={generatedPassword} readOnly />
+              </div>
+              <div className="flex items-center">
+                <input id="mustChangePassword" type="checkbox" checked={mustChangePassword} onChange={e => setMustChangePassword(e.target.checked)} className="mr-2" />
+                <label htmlFor="mustChangePassword" className="text-sm text-gray-700 dark:text-gray-200">Require password change on first login</label>
+              </div>
+              <div className="flex items-center gap-4">
+                <button type="button" onClick={handleSendEmail} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Send credentials via email</button>
+                {emailSent && <span className="text-green-600 text-sm">Email sent!</span>}
+              </div>
+              <div className="flex justify-end space-x-3 mt-6">
+                <button type="button" onClick={() => setShowCredentialsModal(false)} className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700">Cancel</button>
+                <button type="button" onClick={handleConfirmCreateCredentials} className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
+              </div>
+            </div>
           </div>
         </div>
       )}

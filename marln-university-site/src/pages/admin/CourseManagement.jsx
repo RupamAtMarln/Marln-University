@@ -18,6 +18,18 @@ export default function CourseManagement() {
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [form, setForm] = useState({ name: '', code: '', credits: '', hours: '', description: '' });
+  const [levelFilter, setLevelFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filtered courses
+  const filteredCourses = courses.filter(course => {
+    const matchesLevel = levelFilter === 'all' || course.level === levelFilter;
+    const matchesSearch =
+      course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.level.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesLevel && matchesSearch;
+  });
 
   // Add Course
   const handleAdd = (e) => {
@@ -76,6 +88,25 @@ export default function CourseManagement() {
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Course Management</h1>
             <div className="flex gap-2">
+              {/* Filter Dropdown */}
+              <select
+                value={levelFilter}
+                onChange={e => setLevelFilter(e.target.value)}
+                className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 mr-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+              >
+                <option value="all">All Levels</option>
+                <option value="undergraduate">Undergraduate</option>
+                <option value="masters">Masters</option>
+              </select>
+              {/* Search Bar */}
+              <input
+                type="text"
+                placeholder="Search by name or code..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100"
+                style={{ minWidth: 220 }}
+              />
               <button
                 onClick={resetCoursesToDefault}
                 className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors border border-gray-300 dark:border-gray-600"
@@ -106,7 +137,7 @@ export default function CourseManagement() {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {courses.map((course) => (
+                {filteredCourses.map((course) => (
                   <tr key={course.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">{course.name}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{course.code}</td>
