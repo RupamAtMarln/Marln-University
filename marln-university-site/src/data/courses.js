@@ -6,7 +6,8 @@ export const courses = [
     credits: 4,
     hours: 48,
     description: 'Fundamentals of thermodynamics for engineers.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 2,
@@ -15,7 +16,8 @@ export const courses = [
     credits: 3,
     hours: 40,
     description: 'Introduction to data structures and algorithms.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 3,
@@ -24,7 +26,8 @@ export const courses = [
     credits: 3,
     hours: 36,
     description: 'Study of soil properties and management.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 4,
@@ -33,7 +36,8 @@ export const courses = [
     credits: 4,
     hours: 50,
     description: 'Principles of fluid mechanics and applications.',
-    source: 'university'
+    source: 'university',
+    level: 'masters'
   },
   {
     id: 5,
@@ -42,7 +46,8 @@ export const courses = [
     credits: 3,
     hours: 42,
     description: 'Concepts of operating systems and process management.',
-    source: 'university'
+    source: 'university',
+    level: 'masters'
   },
   {
     id: 6,
@@ -51,7 +56,8 @@ export const courses = [
     credits: 4,
     hours: 48,
     description: 'Structure, properties, and reactions of organic compounds.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 7,
@@ -60,7 +66,8 @@ export const courses = [
     credits: 3,
     hours: 36,
     description: 'Vector spaces, matrices, and linear transformations.',
-    source: 'university'
+    source: 'university',
+    level: 'masters'
   },
   {
     id: 8,
@@ -69,7 +76,8 @@ export const courses = [
     credits: 3,
     hours: 36,
     description: 'Introduction to microorganisms and their roles.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 9,
@@ -78,7 +86,8 @@ export const courses = [
     credits: 3,
     hours: 40,
     description: 'Fundamental concepts of management and leadership.',
-    source: 'university'
+    source: 'university',
+    level: 'masters'
   },
   {
     id: 10,
@@ -87,7 +96,8 @@ export const courses = [
     credits: 2,
     hours: 24,
     description: 'Overview of the Indian Constitution and legal framework.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 11,
@@ -96,7 +106,8 @@ export const courses = [
     credits: 3,
     hours: 36,
     description: 'Basic principles and theories of psychology.',
-    source: 'university'
+    source: 'university',
+    level: 'undergraduate'
   },
   {
     id: 12,
@@ -105,7 +116,8 @@ export const courses = [
     credits: 2,
     hours: 28,
     description: 'Study of environment, ecology, and sustainability.',
-    source: 'university'
+    source: 'university',
+    level: 'masters'
   }
 ];
 
@@ -117,7 +129,8 @@ export const predefinedCourses = [
     credits: 3,
     hours: 42,
     description: 'Basics of AI, machine learning, and applications.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'masters'
   },
   {
     id: 'NX-2',
@@ -126,7 +139,8 @@ export const predefinedCourses = [
     credits: 2,
     hours: 30,
     description: 'Core concepts of digital marketing and analytics.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'undergraduate'
   },
   {
     id: 'NX-3',
@@ -135,7 +149,8 @@ export const predefinedCourses = [
     credits: 3,
     hours: 36,
     description: 'Principles of cybersecurity and best practices.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'masters'
   },
   {
     id: 'NX-4',
@@ -144,7 +159,8 @@ export const predefinedCourses = [
     credits: 2,
     hours: 28,
     description: 'Introduction to cloud platforms and services.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'undergraduate'
   },
   {
     id: 'NX-5',
@@ -153,7 +169,8 @@ export const predefinedCourses = [
     credits: 3,
     hours: 36,
     description: 'Distributed ledgers, smart contracts, and blockchain applications.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'masters'
   },
   {
     id: 'NX-6',
@@ -162,7 +179,8 @@ export const predefinedCourses = [
     credits: 2,
     hours: 30,
     description: 'Startup culture, business models, and innovation strategies.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'undergraduate'
   },
   {
     id: 'NX-7',
@@ -171,7 +189,8 @@ export const predefinedCourses = [
     credits: 2,
     hours: 28,
     description: 'Techniques and tools for visualizing data using Python.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'masters'
   },
   {
     id: 'NX-8',
@@ -180,6 +199,7 @@ export const predefinedCourses = [
     credits: 3,
     hours: 40,
     description: 'Building mobile applications for Android and iOS.',
-    source: 'nexushive'
+    source: 'nexushive',
+    level: 'undergraduate'
   }
 ]; 
