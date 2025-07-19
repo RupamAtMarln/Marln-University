@@ -47,6 +47,11 @@ export const sidebarItems = {
           { title: 'Students', path: '/admin/users/students' },
         ],
       },
+      {
+        title: 'Data Retention Policy',
+        path: '/admin/data-retention',
+        icon: '📄',
+      },
     ],
   };
   
