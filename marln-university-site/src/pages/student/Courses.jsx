@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
-import { BookOpen, Clock, Users, Calendar, ChevronRight, Search, FileText, Video, ShieldCheck, CalendarDays } from 'lucide-react';
+import { BookOpen, Clock, Users, Calendar, ChevronRight, Search, FileText, Video, ShieldCheck, CalendarDays, Grid3X3, List, ClipboardList, CheckCircle, BarChart3, FileSpreadsheet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const courses = [
@@ -95,12 +95,17 @@ const courseContents = {
 function Courses() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
   const navigate = useNavigate();
 
   const filteredCourses = courses.filter(course =>
     course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     course.instructor.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const toggleViewMode = () => {
+    setViewMode(viewMode === 'grid' ? 'list' : 'grid');
+  };
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
@@ -109,67 +114,186 @@ function Courses() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">My Courses</h1>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search courses..."
-                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-100"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-500" />
+            <div className="flex items-center gap-4">
+              {/* View Toggle Button */}
+              <div className="flex items-center bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-700 p-1">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === 'grid'
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                  }`}
+                  aria-label="Grid view"
+                >
+                  <Grid3X3 className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-2 rounded-md transition-colors ${
+                    viewMode === 'list'
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                  }`}
+                  aria-label="List view"
+                >
+                  <List className="h-5 w-5" />
+                </button>
+              </div>
+              
+              {/* Search Bar */}
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search courses..."
+                  className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-100"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-500" />
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
-              >
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">{course.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{course.description}</p>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                      <Users className="h-4 w-4 mr-2" />
-                      <span>Instructor: {course.instructor}</span>
+          {/* Grid View */}
+          {viewMode === 'grid' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCourses.map((course) => (
+                <div
+                  key={course.id}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+                >
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">{course.title}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{course.description}</p>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                        <Users className="h-4 w-4 mr-2" />
+                        <span>Instructor: {course.instructor}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                        <Clock className="h-4 w-4 mr-2" />
+                        <span>{course.schedule}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
+                        <Calendar className="h-4 w-4 mr-2" />
+                        <span>Next Class: {new Date(course.nextClass).toLocaleString()}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                      <Clock className="h-4 w-4 mr-2" />
-                      <span>{course.schedule}</span>
-                    </div>
-                    <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      <span>Next Class: {new Date(course.nextClass).toLocaleString()}</span>
-                    </div>
-                  </div>
 
-                  <div className="mt-4">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Progress</span>
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{course.progress}%</span>
+                    <div className="mt-4">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-200">Progress</span>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-200">{course.progress}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div
+                          className="bg-blue-600 h-2 rounded-full"
+                          style={{ width: `${course.progress}%` }}
+                        ></div>
+                      </div>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full"
-                        style={{ width: `${course.progress}%` }}
-                      ></div>
-                    </div>
-                  </div>
 
-                  <button
-                    onClick={() => setSelectedCourse(course)}
-                    className="mt-4 w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
-                    View Details
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </button>
+                    <button
+                      onClick={() => setSelectedCourse(course)}
+                      className="mt-4 w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                      View Details
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
+              ))}
+            </div>
+          )}
+
+          {/* List View */}
+          {viewMode === 'list' && (
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Course
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Instructor
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Schedule
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Progress
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Next Class
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {filteredCourses.map((course) => (
+                      <tr key={course.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div>
+                            <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{course.title}</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400 max-w-xs truncate">{course.description}</div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <Users className="h-4 w-4 mr-2 text-gray-400" />
+                            <span className="text-sm text-gray-900 dark:text-gray-100">{course.instructor}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <Clock className="h-4 w-4 mr-2 text-gray-400" />
+                            <span className="text-sm text-gray-900 dark:text-gray-100">{course.schedule}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="flex-1 mr-3">
+                              <div className="w-20 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div
+                                  className="bg-blue-600 h-2 rounded-full"
+                                  style={{ width: `${course.progress}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                            <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{course.progress}%</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+                            <span className="text-sm text-gray-900 dark:text-gray-100">
+                              {new Date(course.nextClass).toLocaleDateString()}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button
+                            onClick={() => setSelectedCourse(course)}
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          >
+                            View Details
+                            <ChevronRight className="ml-1.5 h-4 w-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
         </div>
 
         {/* Course Details Modal */}
@@ -228,6 +352,66 @@ function Courses() {
                     >
                       <FileText className="mr-2 w-4 h-4" /> View Syllabus (PDF)
                     </button>
+                    
+                    {/* Additional Course Action Buttons */}
+                    <div className="space-y-3 mb-4">
+                      <button
+                        onClick={() => {
+                          // Navigate to Study Plan page
+                          navigate(`/student/study-plan/${selectedCourse.id}`, {
+                            state: { course: selectedCourse }
+                          });
+                        }}
+                        className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg shadow-sm hover:from-green-600 hover:to-emerald-600 font-medium text-sm transition"
+                      >
+                        <ClipboardList className="mr-2 w-4 h-4" /> Study Plan
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          // Navigate to Assignment Submission page with returnTo information
+                          navigate('/student/assignment-submission', {
+                            state: { 
+                              course: selectedCourse,
+                              returnTo: -1 // This will go back to the previous page (course details modal)
+                            }
+                          });
+                        }}
+                        className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg shadow-sm hover:from-orange-600 hover:to-red-600 font-medium text-sm transition"
+                      >
+                        <FileText className="mr-2 w-4 h-4" /> Assignment Submission Form
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          // Navigate to Check My VAE page
+                          navigate(`/student/check-vae/${selectedCourse.id}`, {
+                            state: { 
+                              course: selectedCourse,
+                              returnTo: -1 // This will go back to the previous page (course details modal)
+                            }
+                          });
+                        }}
+                        className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg shadow-sm hover:from-indigo-600 hover:to-purple-600 font-medium text-sm transition"
+                      >
+                        <CheckCircle className="mr-2 w-4 h-4" /> Check My VAE
+                      </button>
+                      
+                      <button
+                        onClick={() => {
+                          // Navigate to Zoola Report page
+                          navigate(`/student/zoola-report/${selectedCourse.id}`, {
+                            state: { 
+                              course: selectedCourse,
+                              returnTo: -1 // This will go back to the previous page (course details modal)
+                            }
+                          });
+                        }}
+                        className="w-full inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-lg shadow-sm hover:from-pink-600 hover:to-rose-600 font-medium text-sm transition"
+                      >
+                        <BarChart3 className="mr-2 w-4 h-4" /> Zoola Report
+                      </button>
+                    </div>
                     
                     <h3 className="flex items-center gap-1 text-base font-bold text-pink-600 mb-2">
                       <Video className="w-5 h-5" /> Weekly Content
