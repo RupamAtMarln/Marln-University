@@ -38,11 +38,19 @@ import StudentNotifications from './pages/student/Notifications.jsx';
 import CoursePdfViewer from './pages/student/CoursePdfViewer.jsx';
 import CourseVideoViewer from './pages/student/CourseVideoViewer.jsx';
 import Ecollab from './pages/student/Ecollab.jsx';
+import StudyPlan from './pages/student/StudyPlan.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import { AccessibilityProvider, useAccessibility } from './context/AccessibilityContext.jsx';
 import AccessibilityBar from './components/AccessibilityBar.jsx';
 import React from 'react';
 import DataRetentionPolicy from './pages/admin/DataRetentionPolicy.jsx';
+import AssignmentSubmission from './pages/student/AssignmentSubmission.jsx';
+import DefinitionsSubmissionForm from './pages/student/DefinitionsSubmissionForm.jsx';
+import CaseBriefsSubmissionForm from './pages/student/CaseBriefsSubmissionForm.jsx';
+import MiniThesisSubmissionForm from './pages/student/MiniThesisSubmissionForm.jsx';
+import MidtermEssaySubmissionForm from './pages/student/MidtermEssaySubmissionForm.jsx';
+import CheckMyVAE from './pages/student/CheckMyVAE.jsx';
+import ZoolaReport from './pages/student/ZoolaReport.jsx';
 
 const RouterComponent = process.env.NODE_ENV === 'production' ? HashRouter : BrowserRouter;
 
@@ -106,19 +114,29 @@ function App() {
                 <Route path="/instructor/messages" element={<InstructorStudentMessages />} />
                 <Route path="/instructor/notifications" element={<NotificationsInstructor />} />
               </Route>
-              <Route element={<PrivateRoute allowedRoles={['student']} />}>
-                <Route path="/student/dashboard" element={<StudentDashboard />} />
-                <Route path="/student/profile" element={<StudentProfile />} />
-                <Route path="/student/courses" element={<StudentCourses />} />
-                <Route path="/student/assignments" element={<StudentAssignments />} />
-                <Route path="/student/grades" element={<StudentGrades />} />
-                <Route path="/student/schedule" element={<StudentSchedule />} />
-                <Route path="/student/materials" element={<StudentMaterials />} />
-                <Route path="/student/messages" element={<StudentMessages />} />
-                <Route path="/student/notifications" element={<StudentNotifications />} />
-                <Route path="/student/ecollab" element={<Ecollab />} />
-                <Route path="/student/courses/:courseId/pdf/:week" element={<CoursePdfViewer />} />
-                <Route path="/student/courses/:courseId/video/:week" element={<CourseVideoViewer />} />
+              {/* Student Routes */}
+              <Route path="/student" element={<PrivateRoute allowedRoles={['student']} />}>
+                <Route index element={<StudentDashboard />} />
+                <Route path="dashboard" element={<StudentDashboard />} />
+                <Route path="courses" element={<StudentCourses />} />
+                <Route path="materials" element={<StudentMaterials />} />
+                <Route path="assignments" element={<StudentAssignments />} />
+                <Route path="grades" element={<StudentGrades />} />
+                <Route path="schedule" element={<StudentSchedule />} />
+                <Route path="messages" element={<StudentMessages />} />
+                <Route path="notifications" element={<StudentNotifications />} />
+                <Route path="profile" element={<StudentProfile />} />
+                <Route path="ecollab" element={<Ecollab />} />
+                <Route path="courses/:courseId/pdf/:type" element={<CoursePdfViewer />} />
+                <Route path="courses/:courseId/video/:type" element={<CourseVideoViewer />} />
+                <Route path="study-plan/:courseId" element={<StudyPlan />} />
+                <Route path="assignment-submission" element={<AssignmentSubmission />} />
+                <Route path="assignment-submission/definitions" element={<DefinitionsSubmissionForm />} />
+                <Route path="assignment-submission/case-briefs" element={<CaseBriefsSubmissionForm />} />
+                <Route path="assignment-submission/mini-thesis" element={<MiniThesisSubmissionForm />} />
+                <Route path="assignment-submission/midterm-essays" element={<MidtermEssaySubmissionForm />} />
+                <Route path="check-vae/:courseId" element={<CheckMyVAE />} />
+                <Route path="zoola-report/:courseId" element={<ZoolaReport />} />
               </Route>
             </Routes>
           </RouterComponent>
